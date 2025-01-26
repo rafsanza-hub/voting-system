@@ -127,6 +127,20 @@ class Voter extends BaseController
         return redirect()->to('voter')->with('message', 'Data berhasil disimpan.');
     }
 
+    public function editProfile()
+    {
+        $gradeModel = new GradeModel();
+        $voter = $this->voterModel->where('user_id', user_id())->first();
+        $gradeName = $gradeModel->where('id', $voter['grade_id'])->first()['name'];
+        $voter['grade_name'] = $gradeName;
+
+        $data = [
+            'title' => 'Profile',
+            'voter' => $this->voterModel->getvoter($voter['id']),
+        ];
+
+        return view('voters/profile', $data);
+    }
 
     public function edit($id)
     {
@@ -142,6 +156,7 @@ class Voter extends BaseController
 
     public function update($voterId)
     {
+        // return dd( $this->request->getPost());
         $validation = \Config\Services::validation();
 
         // Menentukan aturan validasi
@@ -178,15 +193,14 @@ class Voter extends BaseController
         }
 
         $this->db->transStart();
-        $email = mt_rand(10000, 1000000) . '@gmail.com';
         $saveUser = $this->userModel->save([
             'id' => $this->request->getPost('user_id'),
             'username' => $this->request->getPost('username'),
-            'email' => $email,
         ]);
 
         $savevoter = $this->voterModel->save([
             'id' => $voterId,
+            'image' => $this->request->getPost('image'),
             'fullname' => $this->request->getPost('fullname'),
             'grade_id' => $this->request->getPost('grade_id'),
         ]);
@@ -194,7 +208,10 @@ class Voter extends BaseController
 
 
         if ($this->db->transStatus() === false) {
-            return redirect()->back()->withInput()->with('errors', 'Data gagal disimpan.');
+            return redirect()->back()->withInput()->with('error', 'Data gagal disimpan.');
+        }
+        if(in_groups('voter')){
+            return redirect()->back()->with('message', 'Data berhasil disimpan.');
         }
         return redirect()->to('voter')->with('message', 'Data berhasil disimpan.');
     }

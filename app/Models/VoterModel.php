@@ -7,7 +7,7 @@ use CodeIgniter\Model;
 class VoterModel extends Model
 {
     protected $table = 'voters';
-    protected $allowedFields = ['nis', 'fullname', 'grade_id', 'program_id', 'user_id'];
+    protected $allowedFields = ['nis', 'fullname', 'grade_id', 'program_id', 'user_id', 'image'];
 
     public function getVoter($id = null)
     {
