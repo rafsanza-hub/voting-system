@@ -42,33 +42,86 @@
     </div>
 
     <div class="section-body">
-        <div class="row justify-content-center">
-            <?php foreach ($candidates as $candidate): ?>
-                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                    <article class="article">
-                        <div class="article-header rounded">
-                            <div class="article-image bg-secondary img-fluid"
-                                style="background-image: url('<?= base_url() . "img/" . $candidate["image"] ?>');">
+        <?php if ($voting_status == 'ongoing'): ?> 
+            <div class="row justify-content-center">
+                <?php foreach ($candidates as $candidate): ?>
+                    <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                        <article class="article">
+                            <div class="article-header rounded">
+                                <div class="article-image bg-secondary img-fluid"
+                                    style="background-image: url('<?= base_url() . "img/" . $candidate["image"] ?>');">
+                                </div>
+                            </div>
+                            <div class="article-details">
+                                <h3 class="text-center font-weight-bold"><?= ucwords(strtolower($candidate["fullname"])) ?></h3>
+                                <p class="text-center text-muted">Kandidat <?= $candidate['candidate_order'] ?></p>
+                                <div class="article-cta">
+                                    <button class="btn btn-primary btn-custom vote-button" data-toggle="modal"
+                                        data-target="#konfirmasi" data-id="<?= $candidate['id'] ?>"
+                                        data-image="<?= base_url() . "img/" . $candidate["image"] ?>"
+                                        data-name="<?= $candidate["fullname"] ?>"
+                                        data-vision="<?= htmlspecialchars($candidate["vision"]) ?>"
+                                        data-mission="<?= htmlspecialchars($candidate["mission"]) ?>">
+                                        Voting
+                                        sekarang</button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php elseif ($voting_status == 'pending'): ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="alert alert-info">
+                                <h4>Voting Belum Dimulai</h4>
+                                <p>Proses pemungutan suara akan segera dimulai.</p>
+                                <p>Silakan tunggu pengumuman resmi.</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="<?= base_url() ?>" class="btn btn-outline-secondary">
+                                    <i class="fas fa-home mr-2"></i>Kembali ke Beranda
+                                </a>
                             </div>
                         </div>
-                        <div class="article-details">
-                            <h3 class="text-center font-weight-bold"><?= ucwords(strtolower($candidate["fullname"])) ?></h3>
-                            <p class="text-center text-muted">Kandidat <?= $candidate['candidate_order'] ?></p>
-                            <div class="article-cta">
-                                <button class="btn btn-primary btn-custom vote-button" data-toggle="modal"
-                                    data-target="#konfirmasi" data-id="<?= $candidate['id'] ?>"
-                                    data-image="<?= base_url() . "img/" . $candidate["image"] ?>"
-                                    data-name="<?= $candidate["fullname"] ?>"
-                                    data-vision="<?= htmlspecialchars($candidate["vision"]) ?>"
-                                    data-mission="<?= htmlspecialchars($candidate["mission"]) ?>">
-                                    Voting
-                                    sekarang</button>
-                            </div>
-                        </div>
-                    </article>
+                    </div>
                 </div>
-            <?php endforeach; ?>
-        </div>
+            </div>
+        <?php elseif ($voting_status == 'completed'): ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="alert alert-success">
+                                <h4>Voting Telah Selesai</h4>
+                                <p>Terima kasih telah berpartisipasi.</p>
+                                <p>Hasil resmi akan segera diumumkan.</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="<?= base_url() ?>" class="btn btn-outline-success">
+                                    <i class="fas fa-home mr-2"></i>Kembali ke Beranda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php else: ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="alert alert-warning">
+                                <h4>Status Voting Tidak Dikenali</h4>
+                                <p>Terjadi kesalahan dalam menentukan status voting.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
     </div>
 </section>
 

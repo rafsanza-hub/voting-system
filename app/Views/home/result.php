@@ -11,7 +11,6 @@
 
     <div class="section-body">
         <?php
-        $voting_status = 'sd';
         if ($voting_status == 'completed'): ?>
             <div class="row">
                 <div class="col-12">
@@ -122,6 +121,25 @@
                     </div>
                 </div>
             </div>
+        <?php elseif ($voting_status == 'pending'): ?>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <div class="alert alert-info">
+                                <h4>Voting Belum Dimulai</h4>
+                                <p>Proses pemungutan suara akan segera berlangsung.</p>
+                                <p>Silakan tunggu pengumuman resmi dari panitia.</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="<?= base_url() ?>" class="btn btn-outline-secondary">
+                                    <i class="fas fa-home mr-2"></i>Kembali ke Beranda
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         <?php else: ?>
             <div class="row">
                 <div class="col-12">
@@ -131,6 +149,11 @@
                                 <h4>Hasil Voting Belum Tersedia</h4>
                                 <p>Proses pemungutan suara masih berlangsung atau belum selesai.</p>
                                 <p>Hasil resmi akan dipublikasikan setelah proses voting selesai.</p>
+                            </div>
+                            <div class="mt-3">
+                                <a href="<?= base_url() ?>" class="btn btn-outline-warning">
+                                    <i class="fas fa-home mr-2"></i>Kembali ke Beranda
+                                </a>
                             </div>
                         </div>
                     </div>
