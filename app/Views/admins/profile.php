@@ -28,6 +28,7 @@
             <div class="card">
                 <form method="POST" action="<?= base_url('admin/update/') . $admin['id'] ?>" class="needs-validation" novalidate="">
                     <?= csrf_field() ?>
+                    <input type="hidden" name="user_id" value="<?= $admin['user_id'] ?>">
                     <div class="card-header">
                         <h4>Edit Profile</h4>
                     </div>

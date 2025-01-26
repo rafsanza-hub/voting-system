@@ -62,6 +62,7 @@
                                             <td class="text-truncate" style="max-width: 200px;"><?= $candidate["mission"] ?></td>
                                             <td>
                                                 <form action="<?= base_url('candidate/delete/') ?><?= $candidate['id'] ?>" method="post" class="d-inline">
+                                                    <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button class="btn btn-danger" type="submit">hapus</button>
                                                 </form>

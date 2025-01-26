@@ -174,11 +174,9 @@ class Admin extends BaseController
         }
 
         $this->db->transStart();
-        $email = mt_rand(10000, 1000000) . '@gmail.com';
         $this->userModel->save([
             'id' => $this->request->getPost('user_id'),
             'username' => $this->request->getPost('username'),
-            'email' => $email,
         ]);
 
         $this->adminModel->save([
@@ -191,6 +189,10 @@ class Admin extends BaseController
 
         if ($this->db->transStatus() === false) {
             return redirect()->back()->withInput()->with('errors', 'Data gagal disimpan.');
+        }
+
+        if(previous_url() == base_url('admin/profile')) {
+            return redirect()->back()->with('message', 'Data berhasil disimpan.');;
         }
         return redirect()->to('admin')->with('message', 'Data berhasil disimpan.');
     }
