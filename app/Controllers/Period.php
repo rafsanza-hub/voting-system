@@ -25,12 +25,14 @@ class period extends BaseController
     public function index()
     {
         $periods = $this->periodModel->findAll();
-        foreach($periods as &$period){
-            $period["status"] = $this->checkPeriodStatus($period);
-        }
+        $dataExists = !empty($periods);
+        // foreach ($periods as &$period) {
+        //     $period["status"] = $this->checkPeriodStatus($period);
+        // }
         $data = [
             'title' => 'List of period',
             'periods' => $periods,
+            'dataExists' => $dataExists
         ];
         return view('periods/index', $data);
     }
@@ -43,18 +45,18 @@ class period extends BaseController
         return view('periods/create', $data);
     }
 
-    public function checkPeriodStatus($period)
-    {
-        $currentDate = date('Y-m-d H:i:s');
+    // public function checkPeriodStatus($period)
+    // {
+    //     $currentDate = date('Y-m-d H:i:s');
 
-        if ($currentDate < $period["start_date"]) {
-            return 'Menunggu';
-        } elseif ($currentDate >= $period["start_date"] && $currentDate <= $period["end_date"]) {
-            return 'Sedang Berlangsung';
-        } else {
-            return 'Berakhir';
-        }
-    }
+    //     if ($currentDate < $period["start_date"]) {
+    //         return 'Menunggu';
+    //     } elseif ($currentDate >= $period["start_date"] && $currentDate <= $period["end_date"]) {
+    //         return 'Sedang Berlangsung';
+    //     } else {
+    //         return 'Berakhir';
+    //     }
+    // }
 
     public function save()
     {
@@ -91,13 +93,24 @@ class period extends BaseController
             // Jika validasi gagal, kembali dengan pesan error
             return redirect()->back()->withInput()->with('errors', $validation->getErrors());
         }
+        $existingData = $this->periodModel->first();
 
+        if ($existingData) {
+            $this->periodModel->save([
+                'id' => $existingData['id'],
+                'name' => $this->request->getPost('name'),
+                'start_date' => $this->request->getPost('start_date'),
+                'end_date' => $this->request->getPost('end_date'),
+            ]);
+        } else {
+            // belum ada
+            $this->periodModel->save([
+                'name' => $this->request->getPost('name'),
+                'start_date' => $this->request->getPost('start_date'),
+                'end_date' => $this->request->getPost('end_date'),
+            ]);
+        }
 
-        $this->periodModel->save([
-            'name' => $this->request->getPost('name'),
-            'start_date' => $this->request->getPost('start_date'),
-            'end_date' => $this->request->getPost('end_date'),
-        ]);
         return redirect()->to('period')->with('message', 'Data berhasil disimpan.');
     }
 
@@ -157,6 +170,28 @@ class period extends BaseController
         ]);
 
         return redirect()->to('period')->with('message', 'Data berhasil disimpan.');
+    }
+
+    public function updateStatus()
+    {
+        // return dd($this->request->getPost());
+
+        // Ambil data dari form
+        $periodId = $this->request->getPost('periodId');
+        $newStatus = $this->request->getPost('status');
+
+        // Validasi data
+        if (empty($periodId) || empty($newStatus)) {
+            return redirect()->back()->with('error', 'Data tidak valid.');
+        }
+
+        // Update status
+        $this->periodModel->save([
+            'id' => $periodId, 
+            'status' => $newStatus]);
+
+        // Redirect dengan pesan sukses
+        return redirect()->to('/period')->with('message', 'Status voting berhasil diperbarui.');
     }
 
 

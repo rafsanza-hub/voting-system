@@ -21,15 +21,10 @@
                     <div class="card-header">
                         <h4>Advanced Table</h4>
                         <div class="card-header-form">
-                            <!-- <form>
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Search">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary"><i class="fas fa-search"></i></button>
-                                    </div>
-                                </div>
-                            </form> -->
-                            <a href="<?= base_url('period/create') ?>" class="btn btn-primary">Tambah Data</a>
+                            <?php if (!$dataExists) : ?>
+                                <!-- Tombol "Tambah Data" hanya ditampilkan jika tidak ada data -->
+                                <a href="<?= base_url('period/create') ?>" class="btn btn-primary">Tambah Data</a>
+                            <?php endif; ?>
                         </div>
                     </div>
                     <div class="card-body">
@@ -39,9 +34,10 @@
                                     <tr>
                                         <th>No</th>
                                         <th>Nama</th>
-                                        <th>Status</th>
                                         <th>Dimulai</th>
                                         <th>Berkhir</th>
+                                        <th>Status</th>
+                                        <th>Ubah status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -54,9 +50,28 @@
                                             </td>
 
                                             <td><?= $period["name"] ?></td>
-                                            <td><?= $period["status"] ?></td>
                                             <td><?= $period["start_date"] ?></td>
                                             <td><?= $period["end_date"] ?></td>
+                                            <td>
+                                                <?php if ($period["status"] == 'pending') : ?>
+                                                    <span class="badge badge-info">Belum Berlangsung</span>
+                                                <?php elseif ($period["status"] == 'ongoing') : ?>
+                                                    <span class="badge badge-warning">Berlangsung</span>
+                                                <?php elseif ($period["status"] == 'completed') : ?>
+                                                    <span class="badge badge-success">Selesai</span>
+                                                <?php else : ?>
+                                                    <span class="badge badge-secondary"><?= $period["status"] ?></span>
+                                                <?php endif; ?>
+                                            </td>
+                                            <td>
+                                                <a href="<?= base_url('period/change-status/' . $period['id'] . '?status=' . $period['status']) ?>"
+                                                    class="btn btn-sm btn-info"
+                                                    data-toggle="modal"
+                                                    data-target="#statusModal"
+                                                    title="Ubah Status">
+                                                    <i class="fas fa-sync-alt"></i> <!-- Ikon sync -->
+                                                </a>
+                                            </td>
                                             <td>
                                                 <form action="<?= base_url() ?>period/delete/<?= $period["id"] ?>" method="post" class="d-inline">
                                                     <?= csrf_field() ?>
@@ -77,9 +92,55 @@
     </div>
 </section>
 
-
+<!-- Modal untuk Ubah Status -->
+<?php foreach ($periods as $period) : ?>
+    <div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="statusModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="statusModalLabel">Ubah Status Voting</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="<?= base_url('period/update-status') ?>" method="POST">
+                        <?= csrf_field() ?>
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <div class="selectgroup selectgroup-pills">
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="pending" class="selectgroup-input" <?= ($period['status'] == 'pending') ? 'checked' : '' ?>>
+                                    <span class="selectgroup-button selectgroup-button-icon">
+                                        <i class="fas fa-hourglass-start text-info"></i> Belum Berlangsung
+                                    </span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="ongoing" class="selectgroup-input" <?= ($period['status'] == 'ongoing') ? 'checked' : '' ?>>
+                                    <span class="selectgroup-button selectgroup-button-icon">
+                                        <i class="fas fa-sync-alt text-warning"></i> Berlangsung
+                                    </span>
+                                </label>
+                                <label class="selectgroup-item">
+                                    <input type="radio" name="status" value="completed" class="selectgroup-input" <?= ($period['status'] == 'completed') ? 'checked' : '' ?>>
+                                    <span class="selectgroup-button selectgroup-button-icon">
+                                        <i class="fas fa-check-circle text-success"></i> Selesai
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+                        <input type="hidden" name="periodId" value="<?= $period['id'] ?>">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                            <button type="submit" class="btn btn-primary">Simpan</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endforeach; ?>
 <?= $this->endSection() ?>
-
 
 
 
@@ -96,4 +157,37 @@
 
 <!-- Page Specific JS File -->
 <script src="<?= base_url() ?>assets/js/page/modules-datatables.js"></script>
+
+
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap semua tombol dengan class btn-change-status
+        const changeStatusButtons = document.querySelectorAll('.btn-change-status');
+
+        // Tangkap input hidden dan radio button di modal
+        const periodIdInput = document.getElementById('periodId');
+        const statusRadios = document.querySelectorAll('input[name="status"]');
+
+        changeStatusButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const periodId = this.getAttribute('data-id'); // Ambil ID dari atribut data-id
+                const currentStatus = this.getAttribute('data-status'); // Ambil status dari atribut data-status
+
+                // Isi ID ke input hidden di modal
+                periodIdInput.value = periodId;
+
+                // Set radio button yang sesuai dengan status saat ini
+                statusRadios.forEach(radio => {
+                    if (radio.value === currentStatus) {
+                        radio.checked = true;
+                    } else {
+                        radio.checked = false;
+                    }
+                });
+            });
+        });
+    });
+</script>
 <?= $this->endSection() ?>

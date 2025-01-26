@@ -28,8 +28,12 @@ class Vote extends BaseController
     }
 
     public function voting(){
+
+        $periodModel = new \App\Models\PeriodModel();
+        $votingStatus = $periodModel->findColumn('status')[0];
         $data = [
-            'candidates' => $this->candidateModel->findAll()
+            'candidates' => $this->candidateModel->findAll(),
+            'voting_status' => $votingStatus
         ];
         return view('votes/voting', $data);
     }
