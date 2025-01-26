@@ -22,7 +22,7 @@
             <?= $this->include('auth/_message_block.php') ?>
 
             <form Action="<?= base_url('voter/save') ?>" method="post">
-                <?php csrf_field() ?>
+                <?= csrf_field() ?>
                 <div class="card-header">
                     <h4>Foem Tambah pemilih</h4>
                 </div>

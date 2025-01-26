@@ -9,29 +9,23 @@
     <ul class="navbar-nav navbar-right">
 
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                <img alt="image" src="<?= base_url('img/'). (get_image() ?? 'default.png') ?>" class="rounded-circle mr-1">
+                <img alt="image" src="<?= base_url('img/') . (get_image() ?? 'default.png') ?>" class="rounded-circle mr-1">
 
                 <div class="d-sm-none d-lg-inline-block"><?= user()->username ?></div>
             </a>
             <div class="dropdown-menu dropdown-menu-right">
                 <div class="dropdown-title">
-                    <?php
-                    if (in_groups('admin')) {
-                        echo "Admin";
-                    } elseif (in_groups('candidate')) {
-                        echo 'Kandidat';
-                    } elseif (in_groups('voter')) {
-                        echo 'Pemilih';
-                    } else {
-                        echo 'User';
-                    }
-                    ?></div>
-                <a href="features-profile.html" class="dropdown-item has-icon">
+                    <?= get_role() ?></div>
+                <a
+                    href="<?= in_groups('admin') ? base_url('admin/profile') : (in_groups('candidate') ? base_url('candidate/profile') : (in_groups('voter') ? base_url('voter/profile') : base_url())) ?>"
+                    class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
+                <?php if (in_groups('admin')) : ?>
                 <a href="features-settings.html" class="dropdown-item has-icon">
                     <i class="fas fa-cog"></i> Settings
-                </a>    
+                </a>
+                <?php endif; ?>
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('logout') ?>" class="dropdown-item has-icon text-danger">
                     <i class="fas fa-sign-out-alt"></i> Logout

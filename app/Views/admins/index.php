@@ -28,7 +28,7 @@
                                     </div>
                                 </div>
                             </form> -->
-                        <a href="<?= base_url('admin/template') ?>" class="btn btn-primary mr-1">download template</a>
+                            <a href="<?= base_url('admin/template') ?>" class="btn btn-primary mr-1">download template</a>
                             <form action="<?= base_url('admin/import_excel') ?>" method="post" enctype="multipart/form-data" class="d-inline">
                                 <?= csrf_field() ?>
                                 <label for="file_excel" class="btn btn-warning mb-0 mr-1" style="cursor: pointer;">Import Excel</label>
@@ -61,6 +61,7 @@
                                             <td><?= $admin["username"] ?></td>
                                             <td>
                                                 <form action="<?= base_url() ?>admin/delete/<?= $admin["user_id"] ?>" method="post" class="d-inline">
+                                                    <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
                                                     <button class="btn btn-danger" type="submit">hapus</button>
                                                 </form>

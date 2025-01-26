@@ -10,8 +10,7 @@ $routes->get('/candidates', 'Vote::index', ['filter' => 'role:voter,admin']);
 $routes->get('/voting', 'Vote::voting', ['filter' => 'role:voter,admin']);
 $routes->post('vote/save', 'Vote::saveVote', ['filter' => 'role:admin,voter']);
 
-$routes->get('candidate/profile', 'Candidate::editProfile', ['filter' => 'role:candidate']);
-$routes->post('candidate/profile/update/(:num)', 'Candidate::update/$1');
+
 
 // Change password
 $routes->get('change-password', 'AuthController::changePassword');
@@ -23,6 +22,17 @@ $routes->post('update-password', 'AuthController::updatePassword');
 $routes->group('', ['filter' => 'role:admin,voter, candidate'], function ($routes) {
     $routes->get('/', 'Home::index');
     $routes->get('/result', 'Home::result');
+});
+
+// profile
+$routes->group('', [], function ($routes) {
+    $routes->get('voter/profile', 'Voter::editProfile', ['filter' => 'role:voter']);
+    $routes->post('voter/profile/update/(:num)', 'Voter::update/$1',  ['filter' => 'role:voter']);
+
+    $routes->get('candidate/profile', 'Candidate::editProfile', ['filter' => 'role:candidate']);
+    $routes->post('candidate/profile/update/(:num)', 'Candidate::update/$1');
+
+    $routes->get('admin/profile', 'Admin::editProfile', ['filter' => 'role:admin']);
 });
 
 // Dashboard & Reports

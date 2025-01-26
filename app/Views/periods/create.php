@@ -24,7 +24,7 @@
 
         <div class="card">
             <form Action="<?= base_url('period/save') ?>" method="post">
-            <?php csrf_field() ?>
+            <?= csrf_field() ?>
                 <div class="card-header">
                     <h4>Server-side Validation</h4>
                 </div>

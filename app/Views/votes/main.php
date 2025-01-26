@@ -37,8 +37,6 @@
             font-weight: bold;
             /* Opsional untuk menonjolkan teks */
         }
-
-        
     </style>
 
     <!-- Google Analytics -->
@@ -63,25 +61,32 @@
             <nav class="navbar navbar-expand-lg main-navbar">
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">SMKN 2 Kuningan</a>
                 <a href="#" class="nav-link sidebar-gone-show m-3" data-toggle="sidebar"> <i
-                        class="fas fa-bars large"></i></a>
+                        class="fas fa-bars large"></i>
+                </a>
 
-                <form class="form-inline ml-auto">
-                    <div class="search-element">
-                        <input class="form-control" type="search" placeholder="Cari Kandidat" aria-label="Search"
-                            data-width="250">
-                        <button class="btn" type="submit"><i class="fas fa-search"></i></button>
-                    </div>
-                </form>
 
-                <ul class="navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-                            <img alt="image" src="assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-                            <div class="d-sm-none d-lg-inline-block">ril_pinkman</div>
+
+                <ul class="navbar-nav navbar-right ml-auto">
+                    <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+                            <img alt="image" src="<?= base_url('img/') . (get_image() ?? 'default.png') ?>" class="rounded-circle mr-1">
+                            <div class="d-sm-none d-lg-inline-block"><?= user()->username ?></div>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a href="#" class="dropdown-item has-icon text-primary">
-                                <i class="fas fa-sign-out-alt"></i> Profile
+                            <div class="dropdown-title">
+                                <?= get_role() ?></div>
+                            <a
+                                href="<?= in_groups('admin') ? base_url('admin/profile') : (in_groups('candidate') ? base_url('candidate/profile') : (in_groups('voter') ? base_url('voter/profile') : base_url())) ?>"
+                                class="dropdown-item has-icon">
+                                <i class="far fa-user"></i> Profile
+                            </a>
+                            <?php if (in_groups('admin')) : ?>
+                                <a href="features-settings.html" class="dropdown-item has-icon">
+                                    <i class="fas fa-cog"></i> Settings
+                                </a>
+                            <?php endif; ?>
+                            <div class="dropdown-divider"></div>
+                            <a href="<?= base_url('logout') ?>" class="dropdown-item has-icon text-danger">
+                                <i class="fas fa-sign-out-alt"></i> Logout
                             </a>
                         </div>
                     </li>

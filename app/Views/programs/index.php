@@ -121,6 +121,7 @@
             </div>
             <div class="modal-body">
                 <form action="<?= base_url('program/save') ?>" method="post" id="editProgramForm">
+                <?= csrf_field() ?>
                     <label for="name">Nama</label>
                     <input type="text" name="name" id="programName" class="form-control">
                 </div>
