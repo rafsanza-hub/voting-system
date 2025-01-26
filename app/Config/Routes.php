@@ -11,7 +11,6 @@ $routes->get('/voting', 'Vote::voting', ['filter' => 'role:voter,admin']);
 $routes->post('vote/save', 'Vote::saveVote', ['filter' => 'role:admin,voter']);
 
 
-
 // Change password
 $routes->get('change-password', 'AuthController::changePassword');
 $routes->post('update-password', 'AuthController::updatePassword');
@@ -99,6 +98,7 @@ $routes->group('period', ['filter' => 'role:admin'], function ($routes) {
     $routes->get('edit/(:num)', 'Period::edit/$1');
     $routes->post('update/(:num)', 'Period::update/$1');
     $routes->delete('delete/(:num)', 'Period::delete/$1');
+    $routes->post('update-status', 'Period::updateStatus');
 });
 
 // kelas 
