@@ -109,6 +109,17 @@ class AllSeeder extends Seeder
                 throw new Exception('Failed to insert configuration: ' . json_encode($this->db->error()));
             }
 
+            $periodData = [
+                'name'       => 'Pemilihan Ketua OSIS 2025',
+                'start_date' => '2025-09-01',
+                'end_date'   => '2025-09-30'
+            ];
+            
+            $periodResult = $this->db->table('periods')->insert($periodData);
+            if (!$periodResult) {
+                throw new Exception('Failed to insert period: ' . json_encode($this->db->error()));
+            }
+
             // 5. Admin User
             echo "Creating admin user...\n";
             $userData = [

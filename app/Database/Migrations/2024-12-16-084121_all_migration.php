@@ -133,6 +133,10 @@ class AllMigration extends Migration
                 'constraint' => 11,
                 'unsigned'   => true,
             ],
+            'candidate_order'        => [
+                'type'       => 'VARCHAR',
+                'constraint' => 2,
+            ],
             'fullname'        => [
                 'type'       => 'VARCHAR',
                 'constraint' => 50,
