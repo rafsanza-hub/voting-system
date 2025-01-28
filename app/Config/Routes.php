@@ -14,6 +14,7 @@ $routes->post('vote/save', 'Vote::saveVote', ['filter' => 'role:admin,voter']);
 // Change password
 $routes->get('change-password', 'AuthController::changePassword');
 $routes->post('update-password', 'AuthController::updatePassword');
+$routes->get('chat', 'Complaint::index');
 
 
 

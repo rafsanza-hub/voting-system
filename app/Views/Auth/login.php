@@ -66,7 +66,12 @@
 													Forgot Password?
 												</a>
 											</div>
-										<?php endif; ?>
+											<?php endif; ?>
+											<div class="float-right">
+												<a href="<?= url_to('chat') ?>" class="text-small">
+													Lupa Password?
+												</a>
+											</div>
 									</div>
 									<input id="password" type="password" class="form-control <?php if (session('errors.password')) : ?>is-invalid<?php endif ?>" name="password" tabindex="2" placeholder="Password" required>
 									<div class="invalid-feedback">
