@@ -73,10 +73,10 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <form action="<?= base_url() ?>period/delete/<?= $period["id"] ?>" method="post" class="d-inline">
+                                                <form action="<?= base_url() ?>period/delete/<?= $period["id"] ?>" method="post" class="d-inline delete-form">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button class="btn btn-danger" type="submit">hapus</button>
+                                                    <button class="btn btn-danger delete-btn" type="button">hapus</button>
                                                 </form>
                                                 <a href="<?= base_url("period/edit/" . $period['id']) ?>" class="btn btn-warning">edit</a>
                                             </td>
@@ -142,26 +142,47 @@
 <?php endforeach; ?>
 <?= $this->endSection() ?>
 
-
-
 <?= $this->section('style') ?>
 <link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/datatables.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/DataTables-1.10.16/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="<?= base_url() ?>assets/modules/datatables/Select-1.2.4/css/select.bootstrap4.min.css">
 <?= $this->endSection() ?>
+
 <?= $this->section('script') ?>
 <script src="<?= base_url() ?>assets/modules/datatables/datatables.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <!-- Page Specific JS File -->
 <script src="<?= base_url() ?>assets/js/page/modules-datatables.js"></script>
 
-
-
-
 <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Tangkap semua tombol hapus
+        const deleteButtons = document.querySelectorAll('.delete-btn');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const form = this.closest('.delete-form');
+
+                swal({
+                    title: 'Are you sure?',
+                    text: 'Once deleted, you will not be able to recover this data!',
+                    icon: 'warning',
+                    buttons: true,
+                    dangerMode: true,
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        form.submit();
+                    } else {
+                        swal('Your data is safe!');
+                    }
+                });
+            });
+        });
+    });
     document.addEventListener('DOMContentLoaded', function() {
         // Tangkap semua tombol dengan class btn-change-status
         const changeStatusButtons = document.querySelectorAll('.btn-change-status');

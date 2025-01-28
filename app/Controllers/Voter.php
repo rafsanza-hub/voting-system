@@ -221,7 +221,11 @@ class Voter extends BaseController
     {
         // CASCADE
         $this->userModel->delete($userId, true);
-        return redirect()->to('voter');
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ];
+        return $this->response->setJSON($response);
     }
 
     public function updatePassword($voterId)
