@@ -29,7 +29,7 @@
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h4 class="mb-0">Form Kelas</h4>
                         <div class="card-header-form d-flex align-items-center">
-                        <a href="<?= base_url('grade/template') ?>" class="btn btn-primary mr-1">download template</a>
+                            <a href="<?= base_url('grade/template') ?>" class="btn btn-primary mr-1">download template</a>
                             <form action="<?= base_url('grade/import_excel') ?>" method="post" enctype="multipart/form-data" class="d-inline">
                                 <?= csrf_field() ?>
                                 <label for="file_excel" class="btn btn-success mb-0" style="cursor: pointer;">Import Excel</label>
@@ -148,6 +148,7 @@
 <script src="<?= base_url() ?>assets/modules/datatables/DataTables-1.10.16/js/dataTables.bootstrap4.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/datatables/Select-1.2.4/js/dataTables.select.min.js"></script>
 <script src="<?= base_url() ?>assets/modules/jquery-ui/jquery-ui.min.js"></script>
+<script src="<?= base_url() ?>assets/modules/sweetalert/sweetalert.min.js"></script>
 
 <script src="<?= base_url() ?>assets/modules/toastr/toastr.min.js"></script>
 <script>
@@ -159,34 +160,50 @@
             "autoWidth": false,
         });
 
-        // Handle delete dengan AJAX
+        // Handle delete dengan SweetAlert
         $(document).on('submit', '.delete-form', function(e) {
-            e.preventDefault();
-            if (confirm('Apakah anda yakin ingin menghapus data ini?')) {
-                $.ajax({
-                    url: $(this).attr('action'),
-                    method: 'POST',
-                    data: $(this).serialize(),
-                    dataType: 'json',
-                    success: function(response) {
-                        if (response.success) {
-                            // Hapus row dari DataTable
-                            let tr = $(e.target).closest('tr');
-                            dataTable.row(tr).remove().draw(false);
+            e.preventDefault(); // Prevent the form from submitting immediately
 
-                            toastr.success('Data berhasil dihapus', 'Sukses');
+            // SweetAlert confirmation
+            swal({
+                title: 'Apakah anda yakin?',
+                text: 'Once deleted, you will not be able to recover this record!',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    // Proceed with AJAX delete request
+                    $.ajax({
+                        url: $(this).attr('action'),
+                        method: 'POST',
+                        data: $(this).serialize(),
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                // Hapus row dari DataTable
+                                let tr = $(e.target).closest('tr');
+                                dataTable.row(tr).remove().draw(false);
 
-                            // Update nomor urut
-                            dataTable.rows().every(function(rowIdx) {
-                                $(this.node()).find('td:first').html(rowIdx + 1);
-                            });
+                                // Show success message
+                                swal('Poof! Your record has been deleted!', {
+                                    icon: 'success',
+                                });
+
+                                // Update nomor urut
+                                dataTable.rows().every(function(rowIdx) {
+                                    $(this.node()).find('td:first').html(rowIdx + 1);
+                                });
+                            }
+                        },
+                        error: function(xhr) {
+                            swal('Error', 'Failed to delete the record', 'error');
                         }
-                    },
-                    error: function(xhr) {
-                        toastr.error('Gagal menghapus data', 'Error');
-                    }
-                });
-            }
+                    });
+                } else {
+                    swal('Your record is safe!');
+                }
+            });
         });
 
         // Template untuk button aksi

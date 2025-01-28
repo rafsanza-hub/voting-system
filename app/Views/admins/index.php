@@ -60,10 +60,10 @@
                                             <td><?= $admin["fullname"] ?></td>
                                             <td><?= $admin["username"] ?></td>
                                             <td>
-                                                <form action="<?= base_url() ?>admin/delete/<?= $admin["user_id"] ?>" method="post" class="d-inline">
+                                                <form action="<?= base_url('admin/delete/') ?><?= $admin['user_id'] ?>" method="post" class="d-inline delete-form" id="delete-form-<?= $admin['user_id'] ?>">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button class="btn btn-danger" type="submit">hapus</button>
+                                                    <button class="btn btn-danger delete-btn" type="button" data-id="<?= $admin['user_id'] ?>">hapus</button>
                                                 </form>
                                                 <a href="<?= base_url("admin/edit/" . $admin['id']) ?>" class="btn btn-warning">edit</a>
                                             </td>
@@ -98,4 +98,65 @@
 
 <!-- Page Specific JS File -->
 <script src="<?= base_url() ?>assets/js/page/modules-datatables.js"></script>
+<script src="<?= base_url() ?>assets/modules/sweetalert/sweetalert.min.js"></script>
+
+
+<script>
+    $(function() {
+        // Initialize DataTable
+        let dataTable;
+        if ($.fn.DataTable.isDataTable('#table-1')) {
+            dataTable = $('#table-1').DataTable();
+        } else {
+            dataTable = $("#table-1").DataTable({
+                "responsive": true,
+                "lengthChange": false,
+                "autoWidth": false,
+            });
+        }
+
+        // Handle delete form submission
+        $(document).on('click', '.delete-btn', function(e) {
+            e.preventDefault();
+            let id = $(this).data('id');
+            let form = $(`#delete-form-${id}`);
+
+            swal({
+                title: 'Apakah anda yakin?',
+                text: 'Once deleted, you will not be able to recover this admin!',
+                icon: 'warning',
+                buttons: true,
+                dangerMode: true,
+            }).then((willDelete) => {
+                if (willDelete) {
+                    $.ajax({
+                        url: form.attr('action'),
+                        method: 'POST',
+                        data: form.serialize(),
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response.success) {
+                                let tr = form.closest('tr');
+                                dataTable.row(tr).remove().draw(false);
+                                swal('Success!', response.message, 'success');
+
+                                dataTable.rows().every(function(rowIdx) {
+                                    $(this.node()).find('td:first').html(rowIdx + 1);
+                                });
+                            } else {
+                                swal('Error!', 'Failed to delete admin.', 'error');
+                            }
+                        },
+                        error: function(xhr) {
+                            console.log(xhr.responseText);
+                            swal('Error!', 'An error occurred while deleting the admin.', 'error');
+                        }
+                    });
+                } else {
+                    swal('Your admin is safe!');
+                }
+            });
+        });
+    });
+</script>
 <?= $this->endSection() ?>

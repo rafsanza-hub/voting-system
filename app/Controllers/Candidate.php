@@ -328,13 +328,21 @@ class Candidate extends BaseController
 
     public function delete($id)
     {
-
+        $this->db->transStart();
         $candidate = $this->candidateModel->find($id);
         if ($candidate['image'] != 'default.png') {
             unlink('img/' . $candidate['image']);
         }
-        $this->candidateModel->delete($id);
-        return redirect()->to('/candidate');
+        $this->userModel->delete($candidate['user_id'],true);
+        $this->db->transComplete();
+        if ($this->db->transStatus() === false) {
+            return redirect()->back()->with('error', 'Data gagal di hapus.');
+        }
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ];
+        return $this->response->setJSON($response);
     }
 
     public function updatePassword($candidateId)

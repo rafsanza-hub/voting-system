@@ -202,7 +202,11 @@ class Admin extends BaseController
     {
         // CASCADE
         $this->userModel->delete($userId, true);
-        return redirect()->to('admin');
+        $response = [
+            'success' => true,
+            'message' => 'Data berhasil dihapus'
+        ];
+        return $this->response->setJSON($response);
     }
 
 
