@@ -101,7 +101,10 @@
                 <div class="container">
                     <ul class="navbar-nav">
                         <li class="nav-item <?= url_is('/') ? 'active' : '' ?>">
-                            <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Para
+                            <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-home"></i> <span>Beranda</span></a>
+                        </li>
+                        <li class="nav-item <?= url_is('/candidates') ? 'active' : '' ?>">
+                            <a class="nav-link" href="<?= base_url('candidates') ?>"><i class="fas fa-users"></i> <span>Para
                                     Kandidat</span></a>
                         </li>
                         <li class="nav-item <?= url_is('voting') ? 'active' : '' ?>">
@@ -109,7 +112,7 @@
                                 <span>Voting</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i>
+                            <a class="nav-link text-danger" href="<?= base_url('logout') ?>"><i class="fas fa-sign-out-alt"></i>
                                 <span>Logout</span></a>
                         </li>
                     </ul>

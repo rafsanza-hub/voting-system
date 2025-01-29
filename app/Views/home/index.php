@@ -4,7 +4,7 @@
 <?php if (in_groups('admin') || in_groups('voter')): ?>
     <section class="section mt-3">
         <div class="section-header">
-            <h1>Sistem Pemilihan</h1>
+            <h1>Beranda</h1>
         </div>
 
         <div class="section-body">
