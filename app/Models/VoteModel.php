@@ -23,7 +23,7 @@ class VoteModel extends Model
             }
 
             $result = $builder->groupBy('candidates.id')
-                ->orderBy('vote_count', 'DESC')
+                ->orderBy('vote_count', 'DESC') 
                 ->get()
                 ->getResultArray();
 

@@ -33,14 +33,14 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card-stats-items">
-                        <div class="card-stats-item">
+                    <div class="card-stats-items  d-flex justify-content-around">
+                        <div class="card-stats-item text-center">
                             <div class="card-stats-item-count" id="not-voted-count">
                                 <?= $statisticByGrade['not_voted'] ?>
                             </div>
                             <div class="card-stats-item-label">Belum Vote</div>
                         </div>
-                        <div class="card-stats-item">
+                        <div class="card-stats-item text-center">
                             <div class="card-stats-item-count" id="voted-count">
                                 <?= $statisticByGrade['voted'] ?>
                             </div>
@@ -62,18 +62,28 @@
             </div>
         </div>
 
-        <!-- Card Kedua (Statistik Kandidat) -->
         <div class="col-lg-4 col-md-4 col-sm-12">
             <div class="card card-statistic-2">
                 <div class="card-stats">
                     <div class="card-stats-title">Statistik Kandidat</div>
                     <div class="card-stats-items d-flex justify-content-around">
                         <div class="card-stats-item text-center">
-                            <div class="card-stats-item-count">3</div>
+                            <div class="card-stats-item-count"><?= count($candidates) ?></div>
                             <div class="card-stats-item-label">Total Kandidat</div>
                         </div>
                         <div class="card-stats-item text-center">
-                            <div class="card-stats-item-count">150</div>
+                            <div class="card-stats-item-count">
+                                <?php
+                                $highest_vote = 0;
+                                foreach ($candidates as $candidate) {
+                                    $vote_count = $candidate['vote_count'] ?? 0;
+                                    if ($vote_count > $highest_vote) {
+                                        $highest_vote = $vote_count;
+                                    }
+                                }
+                                echo $highest_vote;
+                                ?>
+                            </div>
                             <div class="card-stats-item-label">Vote Tertinggi</div>
                         </div>
                     </div>
@@ -86,7 +96,13 @@
                         <h4 class="mb-0">Total Suara Masuk</h4>
                     </div>
                     <div class="card-body pt-0">
-                        450
+                        <?php
+                        $total_votes = 0;
+                        foreach ($candidates as $candidate) {
+                            $total_votes += $candidate['vote_count'] ?? 0;
+                        }
+                        echo $total_votes;
+                        ?>
                     </div>
                 </div>
             </div>
@@ -180,7 +196,7 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="card-body" id="top-5-scroll">
+                    <div class="card-body card-top">
                         <ul class="list-unstyled list-unstyled-border" id="kandidat-list">
                             <?php foreach ($candidates as $candidate): ?>
                                 <li class="media">
@@ -690,6 +706,26 @@
     .dropdown-menu::-webkit-scrollbar-thumb {
         background: #6777ef;
         border-radius: 4px;
+    }
+
+    .card-top {
+        max-height: 400px;
+        overflow-y: auto;
+        position: relative;
+    }
+
+    .card-top::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .card-top::-webkit-scrollbar-thumb {
+        background: #6777ef;
+        border-radius: 4px;
+    }
+
+    /* Memastikan konten tidak tertutup scrollbar */
+    #kandidat-list {
+        padding-right: 8px;
     }
 </style>
 <?= $this->endSection() ?>

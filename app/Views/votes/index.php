@@ -106,54 +106,19 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="voteButton" data-dismiss="modal">Voting
-                    sekarang</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
             </div>
         </div>
     </div>
 </div>
 
 
-<div class="modal fade" id="konfirmasi" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body text-center p-4">
-                <h5 class="fw-bold mb-3">Apakah yakin dengan pilihan Anda?</h5>
-                <div class="d-flex justify-content-center gap-2">
-                    <button class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
-                    <button class="btn btn-primary" id="confirmVote">Ya</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <?= $this->endSection() ?>
 
 
 <?= $this->section('script') ?>
 <script>
-    // Toastr Configuration
-    const initToastr = () => {
-        toastr.options = {
-            closeButton: true,
-            newestOnTop: false,
-            progressBar: true,
-            positionClass: "toast-top-right",
-            preventDuplicates: true,
-            onclick: null,
-            showDuration: "300",
-            hideDuration: "1000",
-            timeOut: "5000",
-            extendedTimeOut: "1000",
-            showEasing: "swing",
-            hideEasing: "linear",
-            showMethod: "fadeIn",
-            hideMethod: "fadeOut"
-        };
-    };
-
     // Vote Handler Class
     class VoteHandler {
         constructor() {

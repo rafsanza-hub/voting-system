@@ -57,7 +57,7 @@
                                 <p class="text-center text-muted">Kandidat <?= $candidate['candidate_order'] ?></p>
                                 <div class="article-cta">
                                     <button class="btn btn-primary btn-custom vote-button" data-toggle="modal"
-                                        data-target="#konfirmasi" data-id="<?= $candidate['id'] ?>"
+                                        data-target="#confirmVoteModal" data-id="<?= $candidate['id'] ?>"
                                         data-image="<?= base_url() . "img/" . $candidate["image"] ?>"
                                         data-name="<?= $candidate["fullname"] ?>"
                                         data-vision="<?= htmlspecialchars($candidate["vision"]) ?>"
@@ -175,7 +175,7 @@
 
         handleVoteButtonClick(e) {
             const button = e.currentTarget;
-            this.selectedCandidateId = button.dataset.candidateId;
+            this.selectedCandidateId = button.dataset.id;
 
             $('#confirmVoteModal').modal('show');
         }

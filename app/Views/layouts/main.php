@@ -36,7 +36,7 @@
     <div id="app">
         <div class="main-wrapper main-wrapper-1">
 
-         tps<?= $this->include("layouts/navbar") ?>
+            <?= $this->include("layouts/navbar") ?>
             <?= $this->include("layouts/sidebar") ?>
 
             <!-- Main Content -->

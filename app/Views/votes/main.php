@@ -60,9 +60,12 @@
             <!-- Main Navbar -->
             <nav class="navbar navbar-expand-lg main-navbar">
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">SMKN 2 Kuningan</a>
-                <a href="#" class="nav-link sidebar-gone-show m-3" data-toggle="sidebar"> <i
-                        class="fas fa-bars large"></i>
-                </a>
+                <form class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li><a href="#" data-toggle="sidebar" class="nav-link  sidebar-gone-show nav-link-lg"><i class="fas fa-bars"></i></a></li>
+
+                    </ul>
+                </form>
 
 
 
@@ -98,7 +101,10 @@
                 <div class="container">
                     <ul class="navbar-nav">
                         <li class="nav-item <?= url_is('/') ? 'active' : '' ?>">
-                            <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-users"></i> <span>Para
+                            <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-home"></i> <span>Beranda</span></a>
+                        </li>
+                        <li class="nav-item <?= url_is('/candidates') ? 'active' : '' ?>">
+                            <a class="nav-link" href="<?= base_url('candidates') ?>"><i class="fas fa-users"></i> <span>Para
                                     Kandidat</span></a>
                         </li>
                         <li class="nav-item <?= url_is('voting') ? 'active' : '' ?>">
@@ -106,7 +112,7 @@
                                 <span>Voting</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-danger" href="#"><i class="fas fa-sign-out-alt"></i>
+                            <a class="nav-link text-danger" href="<?= base_url('logout') ?>"><i class="fas fa-sign-out-alt"></i>
                                 <span>Logout</span></a>
                         </li>
                     </ul>

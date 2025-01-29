@@ -50,7 +50,12 @@
                 <li class="menu-header">Pengaturan</li>
                 <li>
                     <a class="nav-link <?= url_is('configuration') ? 'active' : '' ?>" href="<?= base_url('configuration') ?>">
-                        <i class="fas fa-cog"></i> <span>Konfigurasi</span>
+                        <i class="fas fa-cog"></i> <span>Pengaturan</span>
+                    </a>
+                </li>
+                <li>
+                    <a class="nav-link <?= url_is('period') ? 'active' : '' ?>" href="<?= base_url('period') ?>">
+                        <i class="fas fa-calendar-alt"></i> <span>Jadwal</span>
                     </a>
                 </li>
 
@@ -85,13 +90,13 @@
             <ul class="sidebar-menu">
                 <li class="menu-header">Home</li>
                 <li>
-                    <a class="nav-link"  href="<?= base_url() ?>">
+                    <a class="nav-link" href="<?= base_url() ?>">
                         <i class="fas fa-poll"></i> <span>Home</span>
                     </a>
                 </li>
                 <li class="menu-header">Pengaturan</li>
                 <li>
-                    <a class="nav-link <?= url_is('voter/profile') ? 'active' : '' ?>"  href="<?= base_url('voter/profile') ?>">
+                    <a class="nav-link <?= url_is('voter/profile') ? 'active' : '' ?>" href="<?= base_url('voter/profile') ?>">
                         <i class="fas fa-poll"></i> <span>Profile</span>
                     </a>
                 </li>
