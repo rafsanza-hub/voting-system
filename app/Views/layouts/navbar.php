@@ -7,7 +7,6 @@
         </ul>
     </form>
     <ul class="navbar-nav navbar-right">
-
         <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
                 <img alt="image" src="<?= base_url('img/') . (get_image() ?? 'default.png') ?>" class="rounded-circle mr-1">
 
@@ -22,8 +21,8 @@
                     <i class="far fa-user"></i> Profile
                 </a>
                 <?php if (in_groups('admin')) : ?>
-                <a href="features-settings.html" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Settings
+                <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
+                    <i class="fas fa-cog"></i> Pengaturan
                 </a>
                 <?php endif; ?>
                 <div class="dropdown-divider"></div>

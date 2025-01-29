@@ -10,8 +10,7 @@
     </div>
 
     <div class="section-body">
-        <?php
-        if ($voting_status == 'completed'): ?>
+        <?php if ($voting_status == 'completed'): ?>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -30,7 +29,7 @@
                                                 <h4>Total Pemilih Terdaftar</h4>
                                             </div>
                                             <div class="card-body">
-                                                <?= $total_registered_voters ?? 10 ?>
+                                                <?= $total_registered_voters ?>
                                             </div>
                                         </div>
                                     </div>
@@ -45,7 +44,7 @@
                                                 <h4>Total Suara Masuk</h4>
                                             </div>
                                             <div class="card-body">
-                                                <?= $total_votes ?? 10 ?>
+                                                <?= $total_votes ?>
                                             </div>
                                         </div>
                                     </div>
@@ -60,7 +59,7 @@
                                                 <h4>Partisipasi</h4>
                                             </div>
                                             <div class="card-body">
-                                                <?= number_format($participation_percentage ?? 10, 2) ?>%
+                                                <?= number_format($participation_percentage, 2) ?>%
                                             </div>
                                         </div>
                                     </div>
@@ -80,22 +79,25 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
+                                            <th  style="width: 30px;">No</th>
                                             <th>Kandidat</th>
                                             <th>Jumlah Suara</th>
                                             <th>Persentase</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <?php $i = 1; ?>
                                         <?php foreach ($candidates as $candidate): ?>
                                             <tr>
+                                                <td><?= $i++ ?></td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <img src="<?= base_url('img/' . $candidate['image']) ?>" class="rounded-circle mr-3" width="50" height="50">
-                                                        <?= $candidate['fullname'] ?>
+                                                        <?= $candidate['name'] ?>
                                                     </div>
                                                 </td>
-                                                <td><?= $candidate['vote_count'] ?? '' ?></td>
-                                                <td><?= number_format($candidate['vote_percentage'] ?? 10, 2) ?>%</td>
+                                                <td><?= $candidate['vote_count'] ?></td>
+                                                <td><?= number_format($candidate['vote_percentage'], 2) ?>%</td>
                                             </tr>
                                         <?php endforeach; ?>
                                     </tbody>

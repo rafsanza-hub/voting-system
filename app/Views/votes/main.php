@@ -60,9 +60,12 @@
             <!-- Main Navbar -->
             <nav class="navbar navbar-expand-lg main-navbar">
                 <a href="index.html" class="navbar-brand sidebar-gone-hide">SMKN 2 Kuningan</a>
-                <a href="#" class="nav-link sidebar-gone-show m-3" data-toggle="sidebar"> <i
-                        class="fas fa-bars large"></i>
-                </a>
+                <form class="form-inline mr-auto">
+                    <ul class="navbar-nav mr-3">
+                        <li><a href="#" data-toggle="sidebar" class="nav-link  sidebar-gone-show nav-link-lg"><i class="fas fa-bars"></i></a></li>
+
+                    </ul>
+                </form>
 
 
 

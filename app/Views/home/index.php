@@ -9,14 +9,6 @@
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12 mb-4">
-                    <div class="hero bg-primary text-white">
-                        <div class="hero-inner">
-                            <h2>Selamat Datang di Sistem Pemilihan</h2>
-                            <p class="lead">Gunakan hak pilih Anda untuk memilih pemimpin masa depan.</p>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="col-lg-4 col-md-6 col-sm-12">
                     <div class="card card-statistic-2">
@@ -28,7 +20,7 @@
                                 <h4>Total Kandidat</h4>
                             </div>
                             <div class="card-body">
-                                3
+                                <?= $count_candidate ?>
                             </div>
                         </div>
                     </div>
@@ -43,7 +35,7 @@
                                 <h4>Total Pemilih</h4>
                             </div>
                             <div class="card-body">
-                                100
+                                <?= $count_voter ?>
                             </div>
                         </div>
                     </div>
@@ -58,7 +50,7 @@
                                 <h4>Sisa Waktu Voting</h4>
                             </div>
                             <div class="card-body" id="countdown">
-                                7 hari
+                               <?= $timeUntilStart ?>
                             </div>
                         </div>
                     </div>
@@ -142,7 +134,7 @@
                                 <h4>Sisa Waktu Voting</h4>
                             </div>
                             <div class="card-body" id="countdown">
-                                7 hari
+                                 <?= $timeUntilStart ?>
                             </div>
                         </div>
                     </div>
@@ -185,20 +177,45 @@
 
 <?= $this->section('script') ?>
 <script>
-    function updateCountdown() {
-        const countdownElement = document.getElementById('countdown');
-        const endDate = new Date();
-        endDate.setDate(endDate.getDate() + 7);
-
-        const now = new Date();
-        const timeLeft = endDate - now;
-
-        const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-        countdownElement.textContent = `${days} hari`;
+function updateCountdown() {
+    const countdownElement = document.getElementById('countdown');
+    if (!countdownElement) return;
+    
+    const now = Math.floor(Date.now() / 1000);
+    const timeLeft = <?php echo $isVotingStarted ? $timeUntilEnd : $timeUntilStart ?>;
+    const targetTime = now + timeLeft;
+    
+    function formatTime(remainingTime) {
+        const hours = Math.floor(remainingTime / 3600);
+        const minutes = Math.floor((remainingTime % 3600) / 60);
+        const seconds = remainingTime % 60;
+        return `${hours}j ${minutes}m ${seconds}d`;
     }
+    
+    function updateTimer() {
+        const currentTime = Math.floor(Date.now() / 1000);
+        const remainingTime = Math.max(0, targetTime - currentTime);
+        
+        if (remainingTime === 0) {
+            <?php if ($isVotingStarted): ?>
+                countdownElement.textContent = 'Voting telah berakhir';
+            <?php else: ?>
+                countdownElement.textContent = 'Voting telah dimulai';
+                location.reload(); 
+            <?php endif; ?>
+            return;
+        }
+        
+        const timeDisplay = formatTime(remainingTime);
+        countdownElement.textContent = <?php echo $isVotingStarted ? 
+            'timeDisplay' : 
+            '`${timeDisplay}`' ?>;
+    }
+    
+    updateTimer();
+    setInterval(updateTimer, 1000);
+}
 
-    // Update countdown immediately and then every day
-    updateCountdown();
-    setInterval(updateCountdown, 24 * 60 * 60 * 1000);
+document.addEventListener('DOMContentLoaded', updateCountdown);
 </script>
 <?= $this->endSection() ?>
