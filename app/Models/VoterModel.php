@@ -24,4 +24,36 @@ class VoterModel extends Model
                 ->findAll();
         }
     }
+
+    public function getGradesWithStatistics()
+    {
+        return $this->db->table('grades')
+            ->select('grades.id, grades.name, 
+                      COUNT(voters.id) as total_voters, 
+                      COUNT(votes.id) as voted_count')
+            ->join('voters', 'voters.grade_id = grades.id', 'left')
+            ->join('votes', 'votes.voter_id = voters.id', 'left')
+            ->groupBy('grades.id')
+            ->get()
+            ->getResultArray();
+    }
+
+    // Ambil daftar voter beserta status voting per kelas
+    public function getVotersWithVoteStatus($gradeId)
+    {
+        // Mengambil data pemilih dan status apakah sudah vote atau belum
+        return $this->db->table('voters')
+            ->select("voters.id, voters.fullname, 
+                      CASE WHEN votes.id IS NOT NULL THEN 1 ELSE 0 END as has_voted", false)
+            ->join('votes', 'votes.voter_id = voters.id', 'left')
+            ->where('voters.grade_id', $gradeId)
+            ->get()
+            ->getResultArray(); // Mengembalikan hasil dalam bentuk array
+    }
+    
+    
+    
+    
+    
+    
 }

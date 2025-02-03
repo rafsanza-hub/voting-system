@@ -78,12 +78,12 @@
                             <div class="dropdown-title">
                                 <?= get_role() ?></div>
                             <a
-                                href="<?= in_groups('admin') ? base_url('admin/profile') : (in_groups('candidate') ? base_url('candidate/profile') : (in_groups('voter') ? base_url('voter/profile') : base_url())) ?>"
+                                href="<?= in_groups('admin') ? base_url('profile/admin') : (in_groups('candidate') ? base_url('profile/candidate') : (in_groups('voter') ? base_url('profile/voter') : base_url())) ?>"
                                 class="dropdown-item has-icon">
                                 <i class="far fa-user"></i> Profile
                             </a>
                             <?php if (in_groups('admin')) : ?>
-                                <a href="features-settings.html" class="dropdown-item has-icon">
+                                <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
                                     <i class="fas fa-cog"></i> Settings
                                 </a>
                             <?php endif; ?>
@@ -103,6 +103,12 @@
                         <li class="nav-item <?= url_is('/') ? 'active' : '' ?>">
                             <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-home"></i> <span>Beranda</span></a>
                         </li>
+                        <?php if (in_groups('admin')) : ?>
+                            <li class="nav-item <?= url_is('admin/dashboard') ? 'active' : '' ?>">
+                                <a class="nav-link" href="<?= base_url('dashboard') ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard Admin</span></a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-item <?= url_is('/candidates') ? 'active' : '' ?>">
                             <a class="nav-link" href="<?= base_url('candidates') ?>"><i class="fas fa-users"></i> <span>Para
                                     Kandidat</span></a>

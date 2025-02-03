@@ -31,11 +31,13 @@
 <?= $this->section('content') ?>
 <section class="section">
     <div class="section-header">
+        <div class="section-header-back">
+            <a href="<?= in_groups('admin') ? base_url('dashboard') : base_url() ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        </div>
         <h1>Ubah Password</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="<?= base_url('dashboard') ?>">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="<?= base_url('candidate') ?>">kandidat</a></div>
-            <div class="breadcrumb-item">Edit Candidate</div>
+            <div class="breadcrumb-item active"><a href="<?= in_groups('admin') ? base_url('dashboard') : base_url() ?>">Dashboard</a></div>
+            <div class="breadcrumb-item">Ubah Password</div>
         </div>
     </div>
 
@@ -48,7 +50,7 @@
                 <h4>Form Ubah Password</h4>
             </div>
             <div class="card-body">
-                <form action="<?= base_url(relativePath: 'update-password')?>" method="post">
+                <form action="<?= base_url(relativePath: 'update-password') ?>" method="post">
                     <?= csrf_field() ?>
                     <input type="hidden" name="user_id" value="<?= user_id() ?>" hidden>
                     <div class="card-body">

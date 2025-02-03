@@ -126,8 +126,9 @@ class Candidate extends BaseController
             ],
             'image' => [
                 'label' => 'image',
-                'rules' => 'max_size[image,5108]|is_image[image]|mime_in[image,image/png,image/jpg,image/jpeg]',
+                'rules' => 'uploaded[image]|max_size[image,5108]|is_image[image]|mime_in[image,image/png,image/jpg,image/jpeg]',
                 'errors' => [
+                    'uploaded' => '{field} harus diisi.',
                     'max_size' => 'Ukuran {field} terlalu besar, max 5MB.',
                     'is_image' => '{field} harus berupa gambar',
                     'mime_in' =>  '{field} harus berformat png, jpg, atau jpeg.'
@@ -391,7 +392,7 @@ class Candidate extends BaseController
         }
 
         // Load library PhpSpreadsheet
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Header kolom
@@ -457,7 +458,7 @@ class Candidate extends BaseController
         $filename = 'All_Candidates_' . date('Y-m-d_H-i-s') . '.xlsx';
 
         // Download file
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
@@ -598,7 +599,7 @@ class Candidate extends BaseController
     public function template()
     {
         // Load library PhpSpreadsheet
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Header kolom
@@ -657,7 +658,7 @@ class Candidate extends BaseController
         $filename = 'Template_Candidates_' . date('Y-m-d_H-i-s') . '.xlsx';
 
         // Download file
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');

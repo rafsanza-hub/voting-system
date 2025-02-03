@@ -1,7 +1,11 @@
 <?= $this->extend('layouts/main'); ?>
 <?= $this->section('content'); ?>
+<?php session()->set('previous_url', previous_url()) ?>
 <section class="section">
     <div class="section-header">
+        <div class="section-header-back">
+            <a href="<?= previous_url() == base_url('change-password') || base_url('profile/admin') ? base_url('dashboard') : previous_url() ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        </div>
         <h1>Profile</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>

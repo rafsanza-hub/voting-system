@@ -191,7 +191,7 @@ class Admin extends BaseController
             return redirect()->back()->withInput()->with('errors', 'Data gagal disimpan.');
         }
 
-        if(previous_url() == base_url('admin/profile')) {
+        if(previous_url() == base_url('profile/admin')) {
             return redirect()->back()->with('message', 'Data berhasil disimpan.');;
         }
         return redirect()->to('admin')->with('message', 'Data berhasil disimpan.');

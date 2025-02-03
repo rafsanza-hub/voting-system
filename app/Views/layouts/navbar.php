@@ -16,14 +16,14 @@
                 <div class="dropdown-title">
                     <?= get_role() ?></div>
                 <a
-                    href="<?= in_groups('admin') ? base_url('admin/profile') : (in_groups('candidate') ? base_url('candidate/profile') : (in_groups('voter') ? base_url('voter/profile') : base_url())) ?>"
+                    href="<?= in_groups('admin') ? base_url('profile/admin') : (in_groups('candidate') ? base_url('profile/candidate') : (in_groups('voter') ? base_url('profile/voter') : base_url())) ?>"
                     class="dropdown-item has-icon">
                     <i class="far fa-user"></i> Profile
                 </a>
                 <?php if (in_groups('admin')) : ?>
-                <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Pengaturan
-                </a>
+                    <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
+                        <i class="fas fa-cog"></i> Pengaturan
+                    </a>
                 <?php endif; ?>
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('logout') ?>" class="dropdown-item has-icon text-danger">
