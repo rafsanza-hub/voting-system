@@ -23,7 +23,7 @@
                     </a>
                 </li>
 
-                <?php if (!url_is('admin/profile') && !url_is('change-password')) : ?>
+                <?php if (!url_is('profile/admin') && !url_is('change-password')) : ?>
                     <li class="menu-header">Kelola User</li>
                     <li>
                         <a class="nav-link <?= url_is('admin') ? 'active' : '' ?>" href="<?= base_url('admin') ?>">
@@ -62,7 +62,7 @@
                 <?php else: ?>
                     <li class="menu-header">Pengaturan</li>
                     <li>
-                        <a class="nav-link <?= url_is('admin/profile') ? 'active' : '' ?>" href="<?= base_url('admin/profile') ?>">
+                        <a class="nav-link <?= url_is('profile/admin') ? 'active' : '' ?>" href="<?= base_url('profile/admin') ?>">
                             <i class="fas fa-poll"></i> <span>Profile</span>
                         </a>
                     </li>
@@ -84,7 +84,7 @@
             <ul class="sidebar-menu">
                 <li class="menu-header">Pengaturan</li>
                 <li>
-                    <a class="nav-link" href="<?= base_url('candidate/profile') ?>">
+                    <a class="nav-link" href="<?= base_url('profile/candidate') ?>">
                         <i class="fas fa-poll"></i> <span>Profile</span>
                     </a>
                 </li>
@@ -110,7 +110,7 @@
                 </li>
                 <li class="menu-header">Pengaturan</li>
                 <li>
-                    <a class="nav-link <?= url_is('voter/profile') ? 'active' : '' ?>" href="<?= base_url('voter/profile') ?>">
+                    <a class="nav-link <?= url_is('profile/voter') ? 'active' : '' ?>" href="<?= base_url('profile/voter') ?>">
                         <i class="fas fa-poll"></i> <span>Profile</span>
                     </a>
                 </li>

@@ -427,7 +427,6 @@ class AuthController extends BaseController
     }
     public function updatePassword()
     {
-
         $validation = \Config\Services::validation();
 
         $validation->setRules([
@@ -441,10 +440,9 @@ class AuthController extends BaseController
             ],
             'current_password' => [
                 'label' => 'Password',
-                'rules' => 'required|min_length[8]',
+                'rules' => 'required',
                 'errors' => [
-                    'required' => 'Password baru harus diisi.',
-                    'min_length' => 'Password minimal 8 karakter.'
+                    'required' => 'Password saat ini harus diisi.',
                 ]
             ],
             'password_confirm' => [

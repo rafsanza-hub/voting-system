@@ -148,7 +148,7 @@
         </p> -->
 
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-8">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-8">
                 <div class="card">
                     <div class="card-header d-flex justify-content-between">
                         <h4>Statistik kandidat</h4>
@@ -236,8 +236,9 @@
                 </div>
             </div>
         </div>
+
         <div class="row">
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-6">
                 <div class="card">
                     <div class="card-header">
                         <h4>Doughnut Chart</h4>
@@ -247,39 +248,89 @@
                     </div>
                 </div>
             </div>
-            <div class="col-12 col-md-6 col-lg-6">
+            <div class="col-12 col-md-12 col-lg-12 col-xl-6">
                 <div class="card">
-                    <div class="card-header d-flex justify-content-between">
-                        <h4>Pie Chart</h4>
-                        <div class="dropdown">
-                            <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#" id="selected-doughnut-class">
-                                <?= session()->get('selected_grade') === 'all' ? 'Semua Kelas' : (isset($grades[session()->get('selected_grade') - 1]) ?
-                                    $grades[session()->get(key: 'selected_grade') - 1]['name'] : 'Pilih Kelas') ?>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" style="max-height: 300px; overflow-y: auto; position: absolute !important;">
-                                <div class="dropdown-title">Pilih Kelas</div>
-                                <a href="javascript:void(0)"
-                                    class="dropdown-doughnut dropdown-item <?= session()->get('selected_grade') == 'all' ? 'active' : '' ?>"
-                                    data-grade="all">Semua Kelas</a>
-                                <?php foreach ($grades as $grade): ?>
-                                    <a href="javascript:void(0)"
-                                        class="dropdown-doughnut dropdown-item <?= session()->get('selected_grade') == $grade['id'] ? 'active' : '' ?>"
-                                        data-grade="<?= $grade['id'] ?>">
-                                        <?= $grade['name'] ?>
-                                    </a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
+                    <div class="card-header">
+                        <h4>Daftar Pemilih & Status Voting</h4>
                     </div>
                     <div class="card-body">
-                        <canvas id="donat"></canvas>
+                        <div class="table-responsive table-scroll">
+                            <table class="table table-striped" id="voter-table">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Kelas</th>
+                                        <th>Jumlah Voter</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="voter-table-body">
+                                    <?php foreach ($grades as $index => $grade): ?>
+                                        <tr>
+                                            <td><?= $index + 1 ?></td>
+                                            <td><?= $grade['name'] ?></td>
+                                            <td class="voter-count-<?= $grade['id'] ?>">-</td>
+                                            <td>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress  mr-3" style="height: 20px; width: 70px">
+                                                        <div class="progress-bar bg-success progress-bar-<?= $grade['id'] ?>"
+                                                            role="progressbar" style="width: 0%">
+                                                            0%
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm detail-btn"
+                                                    data-grade="<?= $grade['id'] ?>"
+                                                    data-grade-name="<?= $grade['name'] ?>">
+                                                    <i class="fas fa-eye"></i> Detail
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+
 </section>
+
+<!-- Modal Detail Voter -->
+<div class="modal fade" id="voterDetailModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Detail Voter - <span id="modal-grade-name"></span></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive">
+                    <table class="table table-striped" id="detail-voter-table">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Nama</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detail-voter-table-body">
+                            <!-- Data will be populated via AJAX -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 
@@ -501,115 +552,84 @@
             });
         });
 
-        let kandidatDoughnutChart = null;
 
-        function initializeKandidatDoughnutChart() {
-            const ctx = document.getElementById("donat").getContext('2d');
-            kandidatDoughnutChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    datasets: [{
-                        data: [],
-                        backgroundColor: [
-                            '#ffa426',
-                            '#fc544b',
-                            '#6777ef',
-                            '#191d21',
-                            '#a3a3a3', // Gray
-                            '#ffc107', // Yellow
-                            '#e83e8c', // Pink
-                            '#20c997', // Teal
-                            '#17a2b8', // Cyan
-                            '#dc3545',
-                            '#3abaf4',
-                        ],
-                        label: 'Dataset 1'
-                    }],
-                    labels: [],
-                },
-                options: {
-                    responsive: true,
-                    legend: {
-                        position: 'bottom',
-                    },
-                    tooltips: {
-                        callbacks: {
-                            label: function(tooltipItem, data) {
-                                const label = data.labels[tooltipItem.index];
-                                const value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
-                                return label + ': ' + value + ' suara';
-                            }
-                        }
-                    }
-                }
-            });
-            return kandidatDoughnutChart;
-        }
+        // Load initial statistics for all grades
+        loadGradeStatistics();
 
-        function updateCandidateDoughnutStats(candidates) {
-            if (kandidatDoughnutChart) {
-                kandidatDoughnutChart.data.labels = candidates.map(c => c.name);
-                kandidatDoughnutChart.data.datasets[0].data = candidates.map(c => c.vote_count);
-                kandidatDoughnutChart.update();
-            }
-        }
+        // Handle detail button click
+        $('.detail-btn').click(function() {
+            const gradeId = $(this).data('grade');
+            const gradeName = $(this).data('grade-name');
 
-        $('.dropdown-doughnut').click(function(e) {
-            e.preventDefault();
-            console.log('Dropdown grade clicked.');
-
-            $('#selected-class').text($(this).text());
-            $('.dropdown-doughnut').removeClass('active');
-            $(this).addClass('active');
-
-            let gradeId = $(this).data('grade');
-
-            // Tambahkan loading state
-            $('#not-voted-count, #voted-count, #total-users').html('<i class="fas fa-spinner fa-spin"></i>');
-            $('#candidate-stats').html('<i class="fas fa-spinner fa-spin"></i>');
-
-            // Ajax request
-            $.ajax({
-                url: '<?= base_url('dashboard/getStatisticsByGrade') ?>/' + gradeId,
-                method: 'GET',
-                dataType: 'json',
-                success: function(response) {
-                    console.log('Response received:', response);
-
-                    // Update statistik umum
-                    $('#not-voted-count').text(response.statistics.not_voted || 0);
-                    $('#voted-count').text(response.statistics.voted || 0);
-                    $('#total-users').text(response.statistics.total_users || 0);
-
-                    // Update statistik kandidat
-                    updateCandidateDoughnutStats(response.candidates);
-
-
-                },
-                error: function(xhr, status, error) {
-                    console.error('Ajax Error:', {
-                        status: status,
-                        error: error,
-                        response: xhr.responseText
-                    });
-
-                    // Reset nilai
-                    $('#not-voted-count, #voted-count, #total-users').text('0');
-                    $('#candidate-stats').html('');
-                    if (kandidatDoughnutChart) {
-                        kandidatDoughnutChart.data.labels = [];
-                        kandidatDoughnutChart.data.datasets[0].data = [];
-                        kandidatDoughnutChart.update();
-                    }
-
-                    alert('Terjadi kesalahan saat mengambil data');
-                }
-            });
+            $('#modal-grade-name').text(gradeName);
+            loadVoterDetails(gradeId);
+            $('#voterDetailModal').modal('show');
         });
 
-        initializeKandidatDoughnutChart();
-        updateCandidateDoughnutStats(<?= json_encode($allCount) ?>);
+        function loadGradeStatistics() {
+            $.ajax({
+                url: '<?= base_url('dashboard/getAllGradeStatistics') ?>',
+                method: 'GET',
+                success: function(response) {
+                    console.log(response); // Debugging, pastikan strukturnya benar
 
+                    if (!Array.isArray(response.data)) {
+                        console.error('Response data bukan array:', response);
+                        return;
+                    }
+
+                    response.data.forEach(function(stat) { // Akses array di dalam response.data
+                        const percentage = ((stat.voted / stat.total) * 100).toFixed(1);
+                        $(`.voter-count-${stat.grade_id}`).text(stat.total);
+                        $(`.progress-bar-${stat.grade_id}`)
+                            .css('width', percentage + '%')
+                            .text(percentage + '%');
+                    });
+                },
+
+                error: function() {
+                    alert('Gagal memuat statistik kelas');
+                }
+            });
+        }
+
+        function loadVoterDetails(gradeId) {
+            $.ajax({
+                url: '<?= base_url('dashboard/getVotersByGrade') ?>/' + gradeId,
+                method: 'GET',
+                beforeSend: function() {
+                    $('#detail-voter-table-body').html(
+                        '<tr><td colspan="3" class="text-center">Loading...</td></tr>'
+                    );
+                },
+                success: function(response) {
+                    let html = '';
+                    if (response.voters && response.voters.length > 0) {
+                        response.voters.forEach((voter, index) => {
+                            html += `
+                            <tr>
+                                <td>${index + 1}</td>
+                                <td>${voter.fullname}</td>
+                                <td>
+                                    <span class="badge badge-${voter.has_voted == 1 ? 'success' : 'danger'}">
+                                        ${voter.has_voted == 1 ? 'Sudah Vote' : 'Belum Vote'}
+                                    </span>
+                                </td>
+                            </tr>
+                        `;
+                        });
+                    } else {
+                        html = '<tr><td colspan="3" class="text-center">Tidak ada data</td></tr>';
+                    }
+                    $('#detail-voter-table-body').html(html);
+                },
+                error: function() {
+                    $('#detail-voter-table-body').html(
+                        '<tr><td colspan="3" class="text-center">Gagal memuat data</td></tr>'
+                    );
+                }
+            });
+        }
     });
 </script>
 
@@ -727,5 +747,23 @@
     #kandidat-list {
         padding-right: 8px;
     }
+
+    .table-scroll {
+        max-height: 400px;
+      
+        overflow-y: auto;
+    }
+    .table-scroll::-webkit-scrollbar {
+        width: 4px;
+    }
+
+    .table-scroll::-webkit-scrollbar-thumb {
+        background: #6777ef;
+        border-radius: 4px;
+    }
+
+
+
+
 </style>
 <?= $this->endSection() ?>

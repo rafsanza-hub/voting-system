@@ -392,7 +392,7 @@ class Candidate extends BaseController
         }
 
         // Load library PhpSpreadsheet
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Header kolom
@@ -458,7 +458,7 @@ class Candidate extends BaseController
         $filename = 'All_Candidates_' . date('Y-m-d_H-i-s') . '.xlsx';
 
         // Download file
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');
@@ -599,7 +599,7 @@ class Candidate extends BaseController
     public function template()
     {
         // Load library PhpSpreadsheet
-        $spreadsheet = new \PhpOffice\PhpSpreadsheet\Spreadsheet();
+        $spreadsheet = new Spreadsheet();
         $sheet = $spreadsheet->getActiveSheet();
 
         // Header kolom
@@ -658,7 +658,7 @@ class Candidate extends BaseController
         $filename = 'Template_Candidates_' . date('Y-m-d_H-i-s') . '.xlsx';
 
         // Download file
-        $writer = new \PhpOffice\PhpSpreadsheet\Writer\Xlsx($spreadsheet);
+        $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="' . $filename . '"');
         header('Cache-Control: max-age=0');

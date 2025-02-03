@@ -61,9 +61,9 @@
                                                 <form class="delete-form d-inline" action="<?= base_url('grade/delete/' . $grade['id']) ?>" method="post">
                                                     <?= csrf_field() ?>
                                                     <input type="hidden" name="_method" value="DELETE">
-                                                    <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+                                                    <button type="submit" class="btn btn-danger">Hapus</button>
                                                 </form>
-                                                <button type="button" class="btn btn-secondary btn-sm btn-edit"
+                                                <button type="button" class="btn btn-warning btn-edit"
                                                     data-toggle="modal"
                                                     data-id="<?= $grade['id'] ?>"
                                                     data-name="<?= $grade['name'] ?>">
@@ -211,9 +211,9 @@
             return `<form class="delete-form d-inline" action="<?= base_url('grade/delete/') ?>${id}" method="post">
             <?= csrf_field() ?>
             <input type="hidden" name="_method" value="DELETE">
-            <button type="submit" class="btn btn-danger btn-sm">Hapus</button>
+            <button type="submit" class="btn btn-danger">Hapus</button>
         </form>
-        <button type="button" class="btn btn-secondary btn-sm btn-edit"
+        <button type="button" class="btn btn-warning btn-edit"
             data-toggle="modal"
             data-id="${id}"
             data-name="${name}">

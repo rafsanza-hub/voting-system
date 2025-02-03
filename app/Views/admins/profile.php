@@ -4,7 +4,7 @@
 <section class="section">
     <div class="section-header">
         <div class="section-header-back">
-            <a href="<?= previous_url() == base_url('change-password') || base_url('admin/profile') ? base_url('dashboard') : previous_url() ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+            <a href="<?= previous_url() == base_url('change-password') || base_url('profile/admin') ? base_url('dashboard') : previous_url() ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
         </div>
         <h1>Profile</h1>
         <div class="section-header-breadcrumb">

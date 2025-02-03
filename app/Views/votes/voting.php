@@ -185,7 +185,7 @@
                 const formData = new FormData();
                 formData.append('candidate_id', this.selectedCandidateId);
 
-                const response = await fetch('<?= base_url('vote/save') ?>', {
+                const response = await fetch('<?= base_url('voting/save') ?>', {
                     method: 'POST',
                     body: formData
                 });
