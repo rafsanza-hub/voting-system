@@ -83,7 +83,7 @@
                                 <i class="far fa-user"></i> Profile
                             </a>
                             <?php if (in_groups('admin')) : ?>
-                                <a href="features-settings.html" class="dropdown-item has-icon">
+                                <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
                                     <i class="fas fa-cog"></i> Settings
                                 </a>
                             <?php endif; ?>
@@ -103,6 +103,12 @@
                         <li class="nav-item <?= url_is('/') ? 'active' : '' ?>">
                             <a class="nav-link" href="<?= base_url() ?>"><i class="fas fa-home"></i> <span>Beranda</span></a>
                         </li>
+                        <?php if (in_groups('admin')) : ?>
+                            <li class="nav-item <?= url_is('admin/dashboard') ? 'active' : '' ?>">
+                                <a class="nav-link" href="<?= base_url('dashboard') ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard Admin</span></a>
+                            </li>
+                        <?php endif; ?>
+
                         <li class="nav-item <?= url_is('/candidates') ? 'active' : '' ?>">
                             <a class="nav-link" href="<?= base_url('candidates') ?>"><i class="fas fa-users"></i> <span>Para
                                     Kandidat</span></a>

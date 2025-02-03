@@ -1,7 +1,11 @@
 <?= $this->extend('layouts/main'); ?>
 <?= $this->section('content'); ?>
+<?php session()->set('previous_url', previous_url()) ?>
 <section class="section">
     <div class="section-header">
+        <div class="section-header-back">
+            <a href="<?= base_url() ?>" class="btn btn-icon"><i class="fas fa-arrow-left"></i></a>
+        </div>
         <h1>Profile</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
@@ -50,40 +54,40 @@
                                     <?= (session('errors')['fullname']) ?? null ?>
                                 </div>
                             </div>
-                        
-                        <div class="form-group col-12 col-md-6">
-                            <label>Kelas</label>
-                            <input type="text"  class="form-control" value=" <?= $voter['grade'] ?>" disabled>
-                        </div>
-                        <div class="form-group col-12 col-md-6">
-                            <label>Role</label>
-                            <input type="text" class="form-control" value=" <?= get_role() ?>" disabled>
-                        </div>
-                        <div class="form-group col-12">
-                            <label class="form-label">Avatar</label>
-                            <div class="selectgroup selectgroup-pills">
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="image" value="default.png" class="selectgroup-input" <?= ($voter['image'] == 'default.png') ? 'checked' : '' ?>>
-                                    <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-info"></i></span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="image" value="default-2.png" class="selectgroup-input" <?= ($voter['image'] == 'default-2.png') ? 'checked' : '' ?>>
-                                    <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-danger"></i></span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="image" value="default-3.png" class="selectgroup-input" <?= ($voter['image'] == 'default-3.png') ? 'checked' : '' ?>>
-                                    <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"></i></span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="image" value="default-4.png" class="selectgroup-input" <?= ($voter['image'] == 'default-4.png') ? 'checked' : '' ?>>
-                                    <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-warning"></i></span>
-                                </label>
-                                <label class="selectgroup-item">
-                                    <input type="radio" name="image" value="default-5.png" class="selectgroup-input" <?= ($voter['image'] == 'default-5.png') ? 'checked' : '' ?>>
-                                    <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-success"></i></span>
-                                </label>
+
+                            <div class="form-group col-12 col-md-6">
+                                <label>Kelas</label>
+                                <input type="text" class="form-control" value=" <?= $voter['grade'] ?>" disabled>
                             </div>
-                        </div>
+                            <div class="form-group col-12 col-md-6">
+                                <label>Role</label>
+                                <input type="text" class="form-control" value=" <?= get_role() ?>" disabled>
+                            </div>
+                            <div class="form-group col-12">
+                                <label class="form-label">Avatar</label>
+                                <div class="selectgroup selectgroup-pills">
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="image" value="default.png" class="selectgroup-input" <?= ($voter['image'] == 'default.png') ? 'checked' : '' ?>>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-info"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="image" value="default-2.png" class="selectgroup-input" <?= ($voter['image'] == 'default-2.png') ? 'checked' : '' ?>>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-danger"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="image" value="default-3.png" class="selectgroup-input" <?= ($voter['image'] == 'default-3.png') ? 'checked' : '' ?>>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="image" value="default-4.png" class="selectgroup-input" <?= ($voter['image'] == 'default-4.png') ? 'checked' : '' ?>>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-warning"></i></span>
+                                    </label>
+                                    <label class="selectgroup-item">
+                                        <input type="radio" name="image" value="default-5.png" class="selectgroup-input" <?= ($voter['image'] == 'default-5.png') ? 'checked' : '' ?>>
+                                        <span class="selectgroup-button selectgroup-button-icon"><i class="fas fa-user text-success"></i></span>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="card-footer text-right">

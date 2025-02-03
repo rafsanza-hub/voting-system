@@ -21,9 +21,9 @@
                     <i class="far fa-user"></i> Profile
                 </a>
                 <?php if (in_groups('admin')) : ?>
-                <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
-                    <i class="fas fa-cog"></i> Pengaturan
-                </a>
+                    <a href="<?= base_url('configuration') ?>" class="dropdown-item has-icon">
+                        <i class="fas fa-cog"></i> Pengaturan
+                    </a>
                 <?php endif; ?>
                 <div class="dropdown-divider"></div>
                 <a href="<?= base_url('logout') ?>" class="dropdown-item has-icon text-danger">
