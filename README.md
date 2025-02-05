@@ -1,68 +1,86 @@
-# CodeIgniter 4 Application Starter
+# **[E-Voting - Sistem Pemilihan Online](https://github.com/rafsanza-hub/voting-system/)**
 
-## What is CodeIgniter?
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+**E-Voting** adalah aplikasi berbasis web yang memungkinkan pengguna untuk melakukan pemilihan secara online dengan aman dan efisien. Aplikasi ini menyediakan fitur untuk memilih calon, melihat hasil pemilihan secara real-time, dan memastikan transparansi serta keamanan proses pemilu.
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Framework dan Library Yang Digunakan
+- [CodeIgniter 4](https://codeigniter.com/)
+- [Myth/Auth](https://github.com/lonnieezell/myth-auth)
+- [Bootstrap 5](https://getbootstrap.com/)
+- [Stisla Admin Template](https://github.com/pixinvent/sneat-bootstrap-html-admin-template-free)
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+## Fitur Utama
+- **Pemilihan Online**: Pengguna dapat memilih kandidat secara online dengan sistem yang aman dan cepat.
+- **Hasil Voting Real-time**: Pemilih dapat melihat hasil pemilihan secara langsung.
+- **Keamanan dan Otorisasi Pengguna**: Menggunakan sistem otentikasi berbasis [Myth/Auth](https://github.com/lonnieezell/myth-auth) untuk menjaga integritas pemilih dan hasil.
+- **Dashboard Admin**: Admin dapat mengelola kandidat dan melihat statistik pemilu dengan mudah.
 
-## Installation & updates
+## Cara Penggunaan
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### Persyaratan
+Pastikan perangkat Anda memiliki:
+- **PHP 8.1+** dan **MySQL** atau **XAMPP versi 8.1+** dengan extension `intl` dan `gd` diaktifkan.
+- **Composer** untuk manajemen dependensi.
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+### Instalasi
 
-## Setup
+Ikuti langkah-langkah berikut untuk menginstal aplikasi sistem pemilihan online ini:
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+1. **Unduh dan Impor Kode Project**
+   - Salin atau unduh kode project ini ke direktori project Anda, misalnya `htdocs` pada XAMPP.
 
-## Important Change with index.php
+2. **Konfigurasi File `.env`**
+   - Jika belum memiliki file `.env`, salin file `env` menjadi `.env`.
+   - **Penting ⚠️**: Pastikan untuk menyesuaikan pengaturan di file `.env`, terutama untuk koneksi database, agar sesuai dengan lingkungan pengembangan Anda.
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+3. **Instalasi Dependensi**
+   - Jalankan perintah berikut di terminal untuk menginstal semua dependensi yang diperlukan:
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+     ```bash
+     composer install
+     ```
 
-**Please** read the user guide for a better explanation of how CI4 works!
+4. **Membuat Database**
+   - Buat database baru di phpMyAdmin atau MySQL, dengan nama `myvote`.
 
-## Repository Management
+5. **Menjalankan Migrasi Database**
+   - Jalankan perintah migrasi untuk membuat tabel-tabel yang diperlukan di database. Ketikkan perintah berikut di terminal:
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+     ```bash
+     php spark migrate --all
+     ```
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+6. **Menambahkan Data Login**
+   - Jalankan perintah berikut untuk menambahkan data pengguna:
 
-## Server Requirements
+     ```bash
+     php spark db:seed AllSeeder
+     ```
 
-PHP version 8.1 or higher is required, with the following extensions installed:
+7. **Menjalankan Website**
+   - Setelah semua terinstal, jalankan server aplikasi menggunakan perintah berikut:
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+     ```bash
+     php spark serve
+     ```
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - If you are still using PHP 7.4 or 8.0, you should upgrade immediately.
-> - The end of life date for PHP 8.1 will be December 31, 2025.
+8. **Akses Aplikasi**
+   - Buka aplikasi melalui browser di [http://localhost:8080](http://localhost:8080).
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+9. **Login dengan Akun Admin**
+    - Gunakan akun berikut untuk mengakses aplikasi:
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+     ```txt
+     username : admin
+     password : admin123
+     ```
+
+---
+
+### Catatan Tambahan
+
+- Pastikan telah memeriksa dan mengonfigurasi database serta file `.env` dengan benar agar aplikasi dapat berjalan lancar.
+- Pastikan juga untuk mengatur pemilihan kandidat, serta status pemilihan di sistem, untuk menjalankan pemilihan dengan lancar.
+
+---
