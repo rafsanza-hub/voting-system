@@ -79,7 +79,7 @@
                                 <table class="table table-striped">
                                     <thead>
                                         <tr>
-                                            <th  style="width: 30px;">No</th>
+                                            <th style="width: 30px;">No</th>
                                             <th>Kandidat</th>
                                             <th>Jumlah Suara</th>
                                             <th>Persentase</th>
@@ -110,18 +110,19 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Sertifikat Hasil Resmi</h4>
+                            <h4>Pengumuman Hasil Pemilihan</h4>
                         </div>
                         <div class="card-body text-center">
                             <div class="alert alert-info">
                                 <p>
-                                    <strong>Hasil resmi telah diverifikasi dan disahkan oleh Komisi Pemilihan.</strong>
+                                    <strong>Hasil pemilihan telah diverifikasi dan disahkan oleh Panitia.</strong>
                                 </p>
-                                <p>Dokumen resmi dapat diminta di sekretariat panitia pemilihan.</p>
+                                <p>Hasil resmi pemilihan dapat dilihat pada halaman ini.</p>
                             </div>
                         </div>
                     </div>
                 </div>
+
             </div>
         <?php elseif ($voting_status == 'pending'): ?>
             <div class="row">

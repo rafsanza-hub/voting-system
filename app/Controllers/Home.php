@@ -44,26 +44,34 @@ class Home extends BaseController
     public function result()
     {
         $voteModel = new VoteModel();
-
+    
         $votingStatistics = $voteModel->getVotingStatistics();
-
         $candidates = $voteModel->getVoteCountByCandidate();
-
+    
         $totalVotes = $votingStatistics['voted'];
+        
         foreach ($candidates as &$candidate) {
             $candidate['vote_percentage'] = ($totalVotes > 0) ? ($candidate['vote_count'] / $totalVotes) * 100 : 0;
         }
-        $candidateModel = new CandidateModel();
+    
+        // Urutkan kandidat berdasarkan jumlah suara 
+        usort($candidates, function ($a, $b) {
+            return $b['vote_count'] <=> $a['vote_count'];
+        });
+    
         $periodModel = new PeriodModel();
         $votingStatus = $periodModel->findColumn('status')[0] ?? 'pending';
+    
         $data = [
             'title' => 'Result',
             'total_registered_voters' => $votingStatistics['total_users'],
             'total_votes' => $votingStatistics['voted'],
             'participation_percentage' => $votingStatistics['voted_percentage'],
-            'candidates' => $candidates,
+            'candidates' => $candidates, // Kandidat sudah diurutkan
             'voting_status' => $votingStatus
         ];
+    
         return view('home/result', $data);
     }
+    
 }

@@ -158,7 +158,6 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="exportDropdown">
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToImage()">Export ke Gambar</a>
-                                <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToPDF()">Export ke PDF</a>
                                 <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToExcel()">Export ke Excel</a>
                             </div>
                         </div>
@@ -358,6 +357,7 @@
 <script src="<?= base_url() ?>assets/modules/chart.min.js"></script>
 <script src="<?= base_url() ?>assets/js/page/modules-chartjs.js"></script>
 <script src="<?= base_url() ?>assets/js/page/index.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
 
 
 <!-- Page Specific JS File -->
@@ -368,15 +368,120 @@
         // Inisialisasi chart
         let kandidatBarChart = null;
 
-        // Fungsi untuk mengekspor chart ke gambar
         window.exportToImage = function() {
             if (kandidatBarChart) {
                 const link = document.createElement('a');
-                link.download = 'kandidat-chart.png';
+                link.download = 'hasil-voting.png';
                 link.href = kandidatBarChart.toBase64Image();
                 link.click();
             }
         };
+
+        /**
+         * Exports chart data to Excel with formatted table
+         * Requires XLSX library (SheetJS)
+         */
+        window.exportToExcel = function() {
+            if (kandidatBarChart) {
+                // Create new workbook
+                const workbook = XLSX.utils.book_new();
+
+                // Create header rows
+                const worksheet = XLSX.utils.aoa_to_sheet([
+                    ['HASIL VOTING PEMILIHAN KETUA OSIS'],
+                    ['Tanggal: ' + new Date().toLocaleDateString('id-ID')],
+                    [''],
+                    ['No', 'Nama Kandidat', 'Total Suara'] // Removed Persentase column
+                ]);
+
+                // Prepare data rows without percentage
+                const data = kandidatBarChart.data.labels.map((label, index) => [
+                    index + 1,
+                    label,
+                    kandidatBarChart.data.datasets[0].data[index]
+                ]);
+
+                // Add data to worksheet starting from A5
+                XLSX.utils.sheet_add_aoa(worksheet, data, {
+                    origin: 'A5'
+                });
+
+                // Merge cells for title
+                worksheet['!merges'] = [{
+                    s: {
+                        r: 0,
+                        c: 0
+                    },
+                    e: {
+                        r: 0,
+                        c: 2
+                    }
+                }];
+
+                // Set column widths
+                worksheet['!cols'] = [{
+                        width: 5
+                    }, // No
+                    {
+                        width: 30
+                    }, // Nama Kandidat
+                    {
+                        width: 15
+                    } // Total Suara
+                ];
+
+                // Add styling
+                const range = XLSX.utils.decode_range(worksheet['!ref']);
+                for (let R = range.s.r; R <= range.e.r; R++) {
+                    for (let C = range.s.c; C <= range.e.c; C++) {
+                        const cell_address = {
+                            c: C,
+                            r: R
+                        };
+                        const cell_ref = XLSX.utils.encode_cell(cell_address);
+
+                        if (!worksheet[cell_ref]) continue;
+
+                        // Add cell styling
+                        worksheet[cell_ref].s = {
+                            font: {
+                                name: 'Arial',
+                                sz: 11,
+                                bold: R < 4
+                            },
+                            alignment: {
+                                horizontal: 'center',
+                                vertical: 'center'
+                            },
+                            border: {
+                                top: {
+                                    style: 'thin'
+                                },
+                                bottom: {
+                                    style: 'thin'
+                                },
+                                left: {
+                                    style: 'thin'
+                                },
+                                right: {
+                                    style: 'thin'
+                                }
+                            }
+                        };
+                    }
+                }
+
+                // Add worksheet to workbook
+                XLSX.utils.book_append_sheet(workbook, worksheet, "Hasil Voting");
+
+                // Generate filename with current date
+                const filename = `hasil_voting_${new Date().toISOString().split('T')[0]}.xlsx`;
+
+                // Save file
+                XLSX.writeFile(workbook, filename);
+            }
+        };
+
 
         function initializeKandidatBarChart() {
             console.log('Initializing chart...');
@@ -429,7 +534,6 @@
                 kandidatBarChart.update();
             }
         }
-
 
         // Handle dropdown kelas
         $('.dropdown-grade').click(function(e) {
@@ -509,6 +613,19 @@
                     'Sudah vote',
                     'Belum vote',
                 ],
+            },
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        callback: function(label) {
+                            if (/\s/.test(label)) {
+                                return label.split(" ");
+                            } else {
+                                return label;
+                            }
+                        }
+                    }
+                }]
             },
             options: {
                 responsive: true,
