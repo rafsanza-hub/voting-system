@@ -153,6 +153,17 @@
                     <div class="card-header d-flex justify-content-between">
                         <h4>Statistik kandidat</h4>
                         <div class="dropdown">
+                            <button class="btn btn-primary dropdown-toggle" type="button" id="exportDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Export
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="exportDropdown">
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToImage()">Export ke Gambar</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToPDF()">Export ke PDF</a>
+                                <a class="dropdown-item" href="javascript:void(0)" onclick="window.exportToExcel()">Export ke Excel</a>
+                            </div>
+                        </div>
+
+                        <div class="dropdown">
                             <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#" id="selected-class2">
                                 <?= session()->get('selected_grade') === 'all' ? 'Semua Kelas' : (isset($grades[session()->get('selected_grade') - 1]) ?
                                     $grades[session()->get(key: 'selected_grade') - 1]['name'] : 'Pilih Kelas') ?>
@@ -180,7 +191,7 @@
             <div class="col-lg-4">
                 <div class="card gradient-bottom">
                     <div class="card-header">
-                        <h4>Top 5 Kandidat</h4>
+                        <h4>Top Kandidat</h4>
                         <div class="card-header-action dropdown">
                             <a href="#" data-toggle="dropdown" class="btn btn-danger dropdown-toggle" id="selected-grade-label">Semua Kelas</a>
                             <ul class="dropdown-menu dropdown-menu-sm dropdown-menu-right">
@@ -357,6 +368,16 @@
         // Inisialisasi chart
         let kandidatBarChart = null;
 
+        // Fungsi untuk mengekspor chart ke gambar
+        window.exportToImage = function() {
+            if (kandidatBarChart) {
+                const link = document.createElement('a');
+                link.download = 'kandidat-chart.png';
+                link.href = kandidatBarChart.toBase64Image();
+                link.click();
+            }
+        };
+
         function initializeKandidatBarChart() {
             console.log('Initializing chart...');
             const ctx = document.getElementById('kandidatBarChart').getContext('2d');
@@ -376,39 +397,31 @@
                     }]
                 },
                 options: {
-                    legend: {
-                        display: false
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
                     },
                     scales: {
-                        yAxes: [{
-                            gridLines: {
-                                drawBorder: false,
-                                color: '#f2f2f2',
-                            },
-                            ticks: {
-                                beginAtZero: true,
-                                stepSize: 1
-                            }
-                        }],
                         xAxes: [{
                             ticks: {
-                                display: false
-                            },
-                            gridLines: {
-                                display: false
+                                callback: function(label) {
+                                    if (/\s/.test(label)) {
+                                        return label.split(" ");
+                                    } else {
+                                        return label;
+                                    }
+                                }
                             }
                         }]
-                    },
+                    }
                 }
             });
             console.log('Chart initialized.');
         }
 
-        // Fungsi untuk update statistik kandidat
         function updateCandidateStats(candidates) {
             console.log('Updating candidate stats with data:', candidates);
-
-            // Update chart
             if (kandidatBarChart) {
                 console.log('Updating chart with candidates:', candidates);
                 kandidatBarChart.data.labels = candidates.map(c => c.name);
@@ -416,6 +429,7 @@
                 kandidatBarChart.update();
             }
         }
+
 
         // Handle dropdown kelas
         $('.dropdown-grade').click(function(e) {
@@ -750,9 +764,10 @@
 
     .table-scroll {
         max-height: 400px;
-      
+
         overflow-y: auto;
     }
+
     .table-scroll::-webkit-scrollbar {
         width: 4px;
     }
@@ -761,9 +776,5 @@
         background: #6777ef;
         border-radius: 4px;
     }
-
-
-
-
 </style>
 <?= $this->endSection() ?>

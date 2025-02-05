@@ -78,7 +78,7 @@
         <!-- Edit Profile Form -->
         <div class="col-12 col-md-12 col-lg-7">
             <div class="card">
-                <form method="post" action="<?= base_url('candidate/profile/update/' . $candidate['id']) ?>" class="needs-validation" novalidate="" enctype="multipart/form-data">
+                <form method="post" action="<?= base_url('profile/candidate/update/' . $candidate['id']) ?>" class="needs-validation" novalidate="" enctype="multipart/form-data">
                     <?= csrf_field() ?>
                     <input type="hidden" name="oldImage" value="<?= $candidate['image'] ?>">
                     <input type="hidden" name="grade_id" value="<?= $candidate['grade_id'] ?>">

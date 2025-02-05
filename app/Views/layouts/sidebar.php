@@ -84,12 +84,12 @@
             <ul class="sidebar-menu">
                 <li class="menu-header">Pengaturan</li>
                 <li>
-                    <a class="nav-link" href="<?= base_url('profile/candidate') ?>">
+                    <a class="nav-link <?= url_is('profile/candidate') ? 'active' : '' ?>" href="<?= base_url('profile/candidate') ?>">
                         <i class="fas fa-poll"></i> <span>Profile</span>
                     </a>
                 </li>
                 <li>
-                    <a class="nav-link" href="<?= base_url('change-password') ?>">
+                    <a class="nav-link <?= url_is('change-password') ? 'active' : '' ?>" href="<?= base_url('change-password') ?>">
                         <i class="fas fa-poll"></i> <span>Password</span>
                     </a>
                 </li>

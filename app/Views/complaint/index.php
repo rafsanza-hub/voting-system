@@ -132,7 +132,7 @@
                     `📄 *Pengaduan*: ${pengaduan}%0A%0A` +
                     `Terima kasih telah mengirimkan pengaduan. Tim kami akan segera menindaklanjuti.`;
 
-    const whatsappUrl = `https://wa.me/62895804217653?text=${message}`; // Ganti dengan nomor WhatsApp yang dituju
+    const whatsappUrl = `https://wa.me/<?= get_config('') ?> ?text=${message}`;
 
     // Buka WhatsApp di tab baru
     window.open(whatsappUrl, '_blank');
