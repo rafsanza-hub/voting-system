@@ -230,13 +230,6 @@ class Candidate extends BaseController
             //         'is_unique' => 'Username sudah terdaftar.'
             //     ]
             // ],
-            'candidate_order' => [
-                'label' => 'candidate_order',
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Nomor urut harus di isi',
-                ]
-            ],
             'vision' => [
                 'label' => 'vision',
                 'rules' => 'required',
@@ -252,6 +245,15 @@ class Candidate extends BaseController
                 ]
             ],
         ];
+        if (!in_groups('candidate')) {
+            $data['candidate_order'] = [
+                    'label' => 'candidate_order',
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Nomor urut harus di isi',
+                    ]
+            ];
+        }
         if (!$this->request->getPost('image') && $this->request->getFile('image')):
             $data['image'] = [
                 'label' => 'image',

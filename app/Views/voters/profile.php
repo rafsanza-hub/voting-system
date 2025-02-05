@@ -30,7 +30,7 @@
         </div>
         <div class="col-12 col-md-12 col-lg-7">
             <div class="card">
-                <form method="POST" action="<?= base_url('voter/profile/update/') . $voter['id'] ?>" class="needs-validation" novalidate="">
+                <form method="POST" action="<?= base_url('profile/voter/update/') . $voter['id'] ?>" class="needs-validation" novalidate="">
                     <?= csrf_field() ?>
                     <input type="hidden" name="grade_id" value="<?= $voter['grade_id'] ?>">
                     <div class="card-header">
