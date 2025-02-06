@@ -26,6 +26,7 @@
 <!-- /END GA --></head>
 
 <body>
+  
   <div id="app">
     <section class="section">
       <div class="container mt-5">
@@ -129,10 +130,9 @@
                     `🔢 *NIS*: ${nis}%0A` +
                     `👤 *Nama Lengkap*: ${nama}%0A` +
                     `🏫 *Kelas*: ${kelas}%0A` +
-                    `📄 *Pengaduan*: ${pengaduan}%0A%0A` +
-                    `Terima kasih telah mengirimkan pengaduan. Tim kami akan segera menindaklanjuti.`;
+                    `📄 *Pengaduan*: ${pengaduan}%0A%0A`;
 
-    const whatsappUrl = `https://wa.me/<?= get_config('') ?> ?text=${message}`;
+    const whatsappUrl = `https://wa.me/<?= get_config('phone') ?>?text=${message}`;
 
     // Buka WhatsApp di tab baru
     window.open(whatsappUrl, '_blank');

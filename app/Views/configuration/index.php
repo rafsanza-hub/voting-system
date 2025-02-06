@@ -11,6 +11,11 @@
 <div class="section">
     <div class="section-header">
         <h1>Konfigurasi</h1>
+        <div class="section-header-button">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#documentationModal">
+                <i class="fas fa-question-circle"></i> Panduan Pengisian
+            </button>
+        </div>
     </div>
 
     <div class="section-body">
@@ -99,6 +104,150 @@
                     <button type="submit" class="btn btn-primary">Simpan Konfigurasi</button>
                 </div>
             </form>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Documentation Modal -->
+<div class="modal fade" id="documentationModal" tabindex="-1" role="dialog" aria-labelledby="documentationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="documentationModalLabel">Panduan Pengisian Konfigurasi</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Konfigurasi ini akan digunakan di seluruh bagian website. Pastikan data yang diisi sudah benar.
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Field</th>
+                                <th>Kegunaan</th>
+                                <th>Format</th>
+                                <th>Contoh</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Nama</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Digunakan sebagai nama website/aplikasi</li>
+                                        <li>Muncul di header website</li>
+
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Hanya huruf, angka, dan spasi</li>
+                                    </ul>
+                                </td>
+                                <td>Pemilihan Ketua Osis SMKN 2 Kuningan</td>
+                            </tr>
+                            <tr>
+                                <td>Logo</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Logo utama website</li>
+                                        <li>Muncul di navbar</li>
+                                        <li>Digunakan sebagai favicon</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Format: PNG, JPG, JPEG</li>
+                                        <li>Maksimal ukuran: 5MB</li>
+                                        <li>Rekomendasi ukuran: 200x200px</li>
+                                    </ul>
+                                </td>
+                                <td>logo.png</td>
+                            </tr>
+                            <tr>
+                                <td>Telepon</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Nomor WhatsApp untuk pengaduan</li>
+                                        <li>Digunakan untuk redirect chat WA</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Diawali dengan 628</li>
+                                        <li>Hanya angka</li>
+                                        <li>Pastikan nomor aktif di WhatsApp</li>
+                                    </ul>
+                                </td>
+                                <td>62895804217653</td>
+                            </tr>
+                            <tr>
+                                <td>Website</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>Website resmi instansi</li>
+                                        <li>Link di footer</li>
+                                        <li>Referensi website utama</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>URL valid dengan https://</li>
+                                        <li>Domain resmi instansi</li>
+                                    </ul>
+                                </td>
+                                <td>https://smkn2-kng.sch.id/</td>
+                            </tr>
+                            <tr>
+                                <td>Alamat</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>-</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>-</li>
+                                    </ul>
+                                </td>
+                                <td>Jl. Malaraman, Desa Cisantana, Kec. Cigugur, Kab. Kuningan, Provinsi Jawa Barat</td>
+                            </tr>
+                            <tr>
+                                <td>Email</td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>-</li>
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul class="mb-0">
+                                        <li>-</li>
+                                    </ul>
+                                </td>
+                                <td>rapsanza@gmail.com</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="alert alert-warning mt-3">
+                    <i class="fas fa-exclamation-triangle"></i> <strong>Penting:</strong>
+                    <ul class="mb-0">
+                        <li>Nomor telepon harus aktif di WhatsApp karena akan digunakan untuk menerima pengaduan</li>
+                        <li>Logo sebaiknya menggunakan format PNG dengan background transparan</li>
+                        <li>Pastikan semua informasi kontak selalu update</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+            </div>
         </div>
     </div>
 </div>

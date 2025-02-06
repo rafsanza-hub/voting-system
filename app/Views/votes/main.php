@@ -108,8 +108,8 @@
                                 <a class="nav-link" href="<?= base_url('dashboard') ?>"><i class="fas fa-tachometer-alt"></i> <span>Dashboard Admin</span></a>
                             </li>
                         <?php endif; ?>
-
-                        <li class="nav-item <?= url_is('/candidates') ? 'active' : '' ?>">
+                        <?php if(!in_groups('candidate')) : ?>
+                        <li class="nav-item <?= url_is('candidates') ? 'active' : '' ?>">
                             <a class="nav-link" href="<?= base_url('candidates') ?>"><i class="fas fa-users"></i> <span>Para
                                     Kandidat</span></a>
                         </li>
@@ -117,6 +117,7 @@
                             <a class="nav-link" href="<?= base_url('voting') ?>"><i class="fas fa-poll"></i>
                                 <span>Voting</span></a>
                         </li>
+                        <?php endif; ?>     
                         <li class="nav-item">
                             <a class="nav-link text-danger" href="<?= base_url('logout') ?>"><i class="fas fa-sign-out-alt"></i>
                                 <span>Logout</span></a>

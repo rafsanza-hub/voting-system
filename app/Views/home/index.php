@@ -50,7 +50,7 @@
                                 <h4>Sisa Waktu Voting</h4>
                             </div>
                             <div class="card-body" id="countdown">
-                               <?= $timeUntilStart ?>
+                                <?= $timeUntilStart ?>
                             </div>
                         </div>
                     </div>
@@ -134,7 +134,7 @@
                                 <h4>Sisa Waktu Voting</h4>
                             </div>
                             <div class="card-body" id="countdown">
-                                 <?= $timeUntilStart ?>
+                                <?= $timeUntilStart ?>
                             </div>
                         </div>
                     </div>
@@ -150,17 +150,17 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <a href="<?= base_url('kandidat/profil') ?>" class="btn btn-primary btn-block">
-                                        <i class="fas fa-user mr-2"></i>Lihat Profil
+                                    <a href="<?= base_url('change-password') ?>" class="btn btn-primary btn-block">
+                                        <i class="fas fa-key mr-2"></i>Ubah Password
                                     </a>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <a href="<?= base_url('kandidat/visi-misi') ?>" class="btn btn-success btn-block">
+                                    <a href="<?= base_url('profile/candidate') ?>" class="btn btn-success btn-block">
                                         <i class="fas fa-lightbulb mr-2"></i>Edit Visi Misi
                                     </a>
                                 </div>
                                 <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
-                                    <a href="<?= base_url('kandidat/statistik') ?>" class="btn btn-info btn-block">
+                                    <a href="<?= base_url('result') ?>" class="btn btn-info btn-block">
                                         <i class="fas fa-chart-bar mr-2"></i>Lihat Statistik
                                     </a>
                                 </div>
@@ -177,45 +177,45 @@
 
 <?= $this->section('script') ?>
 <script>
-function updateCountdown() {
-    const countdownElement = document.getElementById('countdown');
-    if (!countdownElement) return;
-    
-    const now = Math.floor(Date.now() / 1000);
-    const timeLeft = <?php echo $isVotingStarted ? $timeUntilEnd : $timeUntilStart ?>;
-    const targetTime = now + timeLeft;
-    
-    function formatTime(remainingTime) {
-        const hours = Math.floor(remainingTime / 3600);
-        const minutes = Math.floor((remainingTime % 3600) / 60);
-        const seconds = remainingTime % 60;
-        return `${hours}j ${minutes}m ${seconds}d`;
-    }
-    
-    function updateTimer() {
-        const currentTime = Math.floor(Date.now() / 1000);
-        const remainingTime = Math.max(0, targetTime - currentTime);
-        
-        if (remainingTime === 0) {
-            <?php if ($isVotingStarted): ?>
-                countdownElement.textContent = 'Voting telah berakhir';
-            <?php else: ?>
-                countdownElement.textContent = 'Voting telah dimulai';
-                location.reload(); 
-            <?php endif; ?>
-            return;
-        }
-        
-        const timeDisplay = formatTime(remainingTime);
-        countdownElement.textContent = <?php echo $isVotingStarted ? 
-            'timeDisplay' : 
-            '`${timeDisplay}`' ?>;
-    }
-    
-    updateTimer();
-    setInterval(updateTimer, 1000);
-}
+    function updateCountdown() {
+        const countdownElement = document.getElementById('countdown');
+        if (!countdownElement) return;
 
-document.addEventListener('DOMContentLoaded', updateCountdown);
+        const now = Math.floor(Date.now() / 1000);
+        const timeLeft = <?php echo $isVotingStarted ? $timeUntilEnd : $timeUntilStart ?>;
+        const targetTime = now + timeLeft;
+
+        function formatTime(remainingTime) {
+            const hours = Math.floor(remainingTime / 3600);
+            const minutes = Math.floor((remainingTime % 3600) / 60);
+            const seconds = remainingTime % 60;
+            return `${hours}j ${minutes}m ${seconds}d`;
+        }
+
+        function updateTimer() {
+            const currentTime = Math.floor(Date.now() / 1000);
+            const remainingTime = Math.max(0, targetTime - currentTime);
+
+            if (remainingTime === 0) {
+                <?php if ($isVotingStarted): ?>
+                    countdownElement.textContent = 'Voting telah berakhir';
+                <?php else: ?>
+                    countdownElement.textContent = 'Voting telah dimulai';
+                    location.reload();
+                <?php endif; ?>
+                return;
+            }
+
+            const timeDisplay = formatTime(remainingTime);
+            countdownElement.textContent = <?php echo $isVotingStarted ?
+                                                'timeDisplay' :
+                                                '`${timeDisplay}`' ?>;
+        }
+
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+
+    document.addEventListener('DOMContentLoaded', updateCountdown);
 </script>
 <?= $this->endSection() ?>

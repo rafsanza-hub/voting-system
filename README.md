@@ -7,8 +7,16 @@
 ## Framework dan Library Yang Digunakan
 - [CodeIgniter 4](https://codeigniter.com/)
 - [Myth/Auth](https://github.com/lonnieezell/myth-auth)
-- [Bootstrap 5](https://getbootstrap.com/)
-- [Stisla Admin Template](https://github.com/pixinvent/sneat-bootstrap-html-admin-template-free)
+- [Bootstrap 4](https://getbootstrap.com/)
+- [Stisla Admin Template](https://github.com/stisla/stisla)
+- [DataTables](https://datatables.net/)
+- [Chart.js](https://www.chartjs.org/)
+- [PHPSpreadsheet](https://github.com/PHPOffice/PhpSpreadsheet)
+- [SheetJS](https://sheetjs.com/)
+- [SweetAlert2](https://sweetalert2.github.io/)
+- [Toastr](https://codeseven.github.io/toastr/)
+- [FilePond](https://pqina.nl/filepond/)
+- [Summernote](https://summernote.org/)
 
 ## Fitur Utama
 - **Pemilihan Online**: Pengguna dapat memilih kandidat secara online dengan sistem yang aman dan cepat.
@@ -40,9 +48,27 @@ Ikuti langkah-langkah berikut untuk menginstal aplikasi sistem pemilihan online 
      ```bash
      composer install
      ```
+   - Atau, jika ingin menginstal dependensi tanpa paket pengembangan (development packages), gunakan perintah berikut:
+
+     ```bash
+     composer install --no-dev
+     ```
+
+   -  **Perbaikan Bug Myth Auth di `vendor/myth/auth/src/Authentication/Passwords/ValidatorInterface.php`**
+
+      **Perubahan:**
+
+      Dari:
+      ```php
+      use CodeIgniter\Entity;
+      ```
+      Menjadi:
+      ```php
+      use CodeIgniter\Entity\Entity;
+      ```
 
 4. **Membuat Database**
-   - Buat database baru di phpMyAdmin atau MySQL, dengan nama `myvote`.
+   - Buat database baru di phpMyAdmin atau MySQL, dengan nama `db_voting`.
 
 5. **Menjalankan Migrasi Database**
    - Jalankan perintah migrasi untuk membuat tabel-tabel yang diperlukan di database. Ketikkan perintah berikut di terminal:
@@ -51,8 +77,8 @@ Ikuti langkah-langkah berikut untuk menginstal aplikasi sistem pemilihan online 
      php spark migrate --all
      ```
 
-6. **Menambahkan Data Login**
-   - Jalankan perintah berikut untuk menambahkan data pengguna:
+6. **Menambahkan Semua Data**
+   - Jalankan perintah berikut untuk menambahkan semua data:
 
      ```bash
      php spark db:seed AllSeeder
