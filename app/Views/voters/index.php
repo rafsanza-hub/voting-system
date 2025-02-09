@@ -19,7 +19,7 @@
                 <?= $this->include('auth/_message_block.php') ?>
                 <div class="card">
                     <div class="card-header">
-                        <h4>Form pemilih</h4>
+                        <h4>Tabel pemilih</h4>
                         <div class="card-header-form">
 
                             <a href="<?= base_url('voter/template') ?>" class="btn btn-primary mr-1">download template</a>

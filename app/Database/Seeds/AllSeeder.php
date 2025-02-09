@@ -99,9 +99,9 @@ class AllSeeder extends Seeder
                 'name'       => 'E-Voting',
                 'logo'       => 'default-logo.png',
                 'address'    => 'Jl. Example Street No. 123',
-                'email'      => 'admin@example.com',
-                'phone'      => '081234567890',
-                'website'    => 'www.example.com'
+                'email'      => 'smkn2kng@gmail.com',
+                'phone'      => '62895804217653',
+                'website'    => 'https://smkn2-kng.sch.id/'
             ];
             
             $configResult = $this->db->table('configurations')->insert($configData);
@@ -111,6 +111,7 @@ class AllSeeder extends Seeder
 
             $periodData = [
                 'name'       => 'Pemilihan Ketua OSIS 2025',
+                'status'   => 'completed',
                 'start_date' => '2025-09-01',
                 'end_date'   => '2025-09-30'
             ];
@@ -137,7 +138,7 @@ class AllSeeder extends Seeder
             // 6. Admin Profile
             echo "Creating admin profile...\n";
             $adminData = [
-                'user_id'    => $userId, // Menggunakan $userId bukan hardcode 1
+                'user_id'    => $userId, // Menggunakan $userId 
                 'fullname'   => 'Administrator'
             ];
             
@@ -149,7 +150,7 @@ class AllSeeder extends Seeder
             // 7. User Group Assignment
             echo "Assigning admin to group...\n";
             $userGroupData = [
-                'user_id'    => $userId, // Menggunakan $userId bukan hardcode 1
+                'user_id'    => $userId, // Menggunakan $userId
                 'group_id'   => 1
             ];
             

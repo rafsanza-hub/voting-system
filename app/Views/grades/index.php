@@ -27,7 +27,7 @@
                 <!-- Card Component -->
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
-                        <h4 class="mb-0">Form Kelas</h4>
+                        <h4 class="mb-0">Tabel Kelas</h4>
                         <div class="card-header-form d-flex align-items-center">
                             <a href="<?= base_url('grade/template') ?>" class="btn btn-primary mr-1">download template</a>
                             <form action="<?= base_url('grade/import_excel') ?>" method="post" enctype="multipart/form-data" class="d-inline">
@@ -47,7 +47,7 @@
                                 <thead>
                                     <tr>
                                         <th>No</th>
-                                        <th>Grade</th>
+                                        <th>Kelas</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>

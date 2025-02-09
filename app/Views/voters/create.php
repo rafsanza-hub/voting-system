@@ -24,7 +24,7 @@
             <form Action="<?= base_url('voter/save') ?>" method="post">
                 <?= csrf_field() ?>
                 <div class="card-header">
-                    <h4>Foem Tambah pemilih</h4>
+                    <h4>Form Tambah pemilih</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">

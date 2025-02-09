@@ -16,7 +16,7 @@ class Grade extends BaseController
     public function index()
     {
         $data = [
-            'title' => 'Service Grade',
+            'title' => 'List of Grade',
             'grades' => $this->gradeModel->findAll(),
         ];
 

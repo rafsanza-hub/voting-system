@@ -10,7 +10,7 @@ use \Myth\Auth\Config\Auth as AuthConfig;
 use Myth\Auth\Config\Services;
 use Myth\Auth\Password;
 
-class period extends BaseController
+class Period extends BaseController
 {
 
     protected $periodModel;

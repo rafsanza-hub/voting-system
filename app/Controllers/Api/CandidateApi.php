@@ -8,7 +8,7 @@ use App\Models\UserModel;
 use CodeIgniter\API\ResponseTrait;
 use Exception;
 
-class ApiCandidate extends ResourceController
+class CandidateApi extends ResourceController
 {
     use ResponseTrait;
 

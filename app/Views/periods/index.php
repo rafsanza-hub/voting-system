@@ -3,7 +3,7 @@
 <?= $this->section('content') ?>
 <section class="section">
     <div class="section-header">
-        <h1>Table</h1>
+        <h1>Jadwal</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="<?= base_url('dashboard') ?>">Dashboard</a></div>
             <div class="breadcrumb-item"><a href="<?= base_url('period') ?>">Jadwal</a></div>

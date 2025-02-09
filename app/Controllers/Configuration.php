@@ -32,7 +32,7 @@ class Configuration extends BaseController
         ];
         if ($this->request->getPost('logo') !== $this->request->getPost('oldLogo')) {
             $rules = [
-                'logo' => 'is_image[logo]|max_size[logo,2048]'
+                'logo' => 'is_image[logo]|max_size[logo,5448]'
             ];
         }
 

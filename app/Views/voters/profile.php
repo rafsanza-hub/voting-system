@@ -48,12 +48,10 @@
                             <div class="form-group col-12">
                                 <label>Nama Lengkap</label>
                                 <input type="text"
-                                    class="form-control <?= session('errors') && isset(session('errors')['fullname']) ? 'is-invalid' : ''; ?>"
-                                    name="fullname" value="<?= old('fullname', $voter['fullname']) ?>" required>
-                                <div class="invalid-feedback">
-                                    <?= (session('errors')['fullname']) ?? null ?>
-                                </div>
+                                    class="form-control"
+                                    name="assksksks" value="<?=  $voter['fullname'] ?>" required disabled>
                             </div>
+                            <input type="hidden" name="fullname"  value="<?=  $voter['fullname'] ?>">
 
                             <div class="form-group col-12 col-md-6">
                                 <label>Kelas</label>

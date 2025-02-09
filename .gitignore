@@ -1,5 +1,9 @@
 public/img/*
+
 !public/img/default*.png
+!public/img/config/
+public/img/config/*
+!public/img/config/default-logo.png
 
 
 #-------------------------

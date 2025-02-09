@@ -523,6 +523,7 @@ class Candidate extends BaseController
             // Get data from Excel
             $nis = trim($row[1] ?? ''); // nis/username
             $fullname = trim($row[2] ?? ''); // nama lengkap
+            $candidateOrder = $row[4] ?? ''; // no urut
             $gradeName = trim(strtolower($row[3] ?? '')); // kelas
 
             $firstName = ucfirst(strtolower(explode(' ', $fullname)[0]));
@@ -540,6 +541,13 @@ class Candidate extends BaseController
             if (empty($fullname)) {
                 $this->db->transRollback();
                 session()->setFlashdata('error', 'Nama Lengkap tidak boleh kosong pada baris ' . ($i + 1));
+                return redirect()->back()->withInput();
+            }
+
+            // no urut
+            if (empty($candidateOrder)) {
+                $this->db->transRollback();
+                session()->setFlashdata('error', 'No urut tidak boleh kosong pada baris ' . ($i + 1));
                 return redirect()->back()->withInput();
             }
 
@@ -577,8 +585,7 @@ class Candidate extends BaseController
             $candidateData = [
                 'user_id' => $userId,
                 'fullname' => $fullname,
-                'vision' => $row[4] ?? '', // f
-                'mission' => $row[5] ?? '', // g
+                'candidate_order' => $candidateOrder ?? '', // e
                 'image' => 'default.png',
                 'grade_id' => $gradeNameToId[$gradeName]
             ];
@@ -609,8 +616,7 @@ class Candidate extends BaseController
         $sheet->setCellValue('B1', 'Username');
         $sheet->setCellValue('C1', 'Nama Lengkap');
         $sheet->setCellValue('D1', 'Kelas');
-        $sheet->setCellValue('E1', 'Visi');
-        $sheet->setCellValue('F1', 'Misi');
+        $sheet->setCellValue('E1', 'No Urut');
 
         // Styling header
         $headerStyle = [
@@ -630,15 +636,14 @@ class Candidate extends BaseController
             ]
         ];
 
-        $sheet->getStyle('A1:F1')->applyFromArray($headerStyle);
+        $sheet->getStyle('A1:E1')->applyFromArray($headerStyle);
 
         // Set predefined column widths
         $sheet->getColumnDimension('A')->setWidth(5);
         $sheet->getColumnDimension('B')->setWidth(25);
         $sheet->getColumnDimension('C')->setWidth(25);
         $sheet->getColumnDimension('D')->setWidth(15);
-        $sheet->getColumnDimension('E')->setWidth(40);
-        $sheet->getColumnDimension('F')->setWidth(40);
+        $sheet->getColumnDimension('E')->setWidth(7);
 
         // Align the numbers in column A to the center
         $sheet->getStyle('A2:A23')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
@@ -654,7 +659,7 @@ class Candidate extends BaseController
         ];
 
         // Apply styling to data rows (2 empty rows as template)
-        $sheet->getStyle('A2:F23')->applyFromArray($dataStyle);
+        $sheet->getStyle('A2:E23')->applyFromArray($dataStyle);
 
         // Nama file template
         $filename = 'Template_Candidates_' . date('Y-m-d_H-i-s') . '.xlsx';
